@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:networks_app/bindings/signin_binding.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
+import 'package:networks_app/utils/router/app_router.dart';
 import 'package:networks_app/utils/theme/theme.dart';
 
 import 'localization/translations.dart';
@@ -24,11 +26,11 @@ class App extends StatelessWidget {
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
         // initialRoute: initialRoute,
-        // getPages: AppRoutes.routes,
+        getPages: AppRoutes.routes,
         translations: TAppTranslations(),
         // locale: Locale(language ?? 'en'),
         // fallbackLocale: const Locale('en'),
-        // initialBinding: GeneralBindings(),
+        initialBinding: SigninBinding(),
       ),
     );
   }

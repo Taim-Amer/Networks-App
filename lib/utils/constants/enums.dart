@@ -4,6 +4,6 @@ enum OrderStatus {processing, shipped, delivered}
 
 enum PaymentMethods {paypal, googlePay, applePay, masterCard, creditCard, paystack, razorPay, paytm}
 
-enum RequestState { begin, loading, onError, noData, success }
+enum RequestState { begin, loading, error, noData, success }
 
 enum ToastState { success, error, warning }
