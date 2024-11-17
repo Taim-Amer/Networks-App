@@ -1,0 +1,91 @@
+name: networks_app
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+flutter_gen:
+  output: lib/utils/gen
+
+#----------------- PACKAGES -----------------#
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Utility Packages
+  http: ^1.2.1
+  intl: ^0.18.0
+  logger: ^2.3.0
+  smooth_page_indicator: ^1.1.0
+  flutter_screenutil: ^5.9.3
+  flutter_otp_text_field: ^1.2.0
+  fluttertoast: ^8.2.8
+  loading_animation_widget: ^1.3.0
+  scroll_date_picker: ^3.8.0
+
+  # Icons
+  iconsax: ^0.0.8
+  cupertino_icons: ^1.0.6
+  flutter_svg: ^2.0.10+1
+
+  # State Management
+  get: ^4.6.6
+
+  # Product Specific
+  carousel_slider: ^5.0.0
+  readmore: ^3.0.0
+  flutter_rating_bar: ^4.0.1
+
+  # Storage
+  shared_preferences: ^2.3.2
+  get_storage: ^2.1.1
+
+  # Api
+  dio: ^5.7.0
+  pretty_dio_logger: ^1.4.0
+
+
+#----------------- ./ PACKAGES END -----------------#
+#
+#dev_dependencies:
+#  flutter_test:
+#    sdk: flutter
+#
+#  flutter_lints: ^3.0.0
+#
+#flutter:
+#  uses-material-design: true
+#
+##----------------- LOCAL ASSETS -----------------#
+#
+#  assets:
+#    - assets/logos/
+#    - assets/images/animations/
+#    - assets/images/user/
+#    - assets/logos/auth/
+#    - assets/icons/auth/
+#    - assets/images/shapes/
+#    - assets/icons/flags/
+#    - assets/logos/home/
+#    - assets/logos/profile/
+#    - assets/icons/global/
+#
+##----------------- LOCAL FONTS -----------------#
+#
+#  fonts:
+#    - family: Almarai
+#      fonts:
+#        - asset: assets/fonts/Almarai-Light.ttf
+#          weight: 300
+#        - asset: assets/fonts/Almarai-Regular.ttf
+#          weight: 400
+#        - asset: assets/fonts/Almarai-Bold.ttf
+#          weight: 600
+#        - asset: assets/fonts/Almarai-ExtraBold.ttf
+#          weight: 800
+
+
