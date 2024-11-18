@@ -25,7 +25,7 @@ class App extends StatelessWidget {
         themeMode: ThemeMode.system,
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
-        // initialRoute: initialRoute,
+         initialRoute: AppRoutes.signin,
         getPages: AppRoutes.routes,
         translations: TAppTranslations(),
         // locale: Locale(language ?? 'en'),
