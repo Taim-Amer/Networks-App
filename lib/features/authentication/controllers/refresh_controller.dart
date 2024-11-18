@@ -16,6 +16,7 @@ class RefreshController extends GetxController{
     refreshApiStatus.value = value;
   }
 
+  @override
   Future<void> refresh() async{
     updateStatus(value: RequestState.loading);
     try{
