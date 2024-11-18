@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 import 'package:networks_app/bindings/signin_binding.dart';
+import 'package:networks_app/bindings/signup_binding.dart';
 import 'package:networks_app/features/authentication/screens/signin/signin_screen.dart';
+import 'package:networks_app/features/authentication/screens/signup/signup_screen.dart';
 
 class AppRoutes {
   static const signin = '/signin';
+  static const signup = '/signup';
 
   static List<GetPage> routes = [
     GetPage(
@@ -11,6 +14,13 @@ class AppRoutes {
         page: () => const SigninScreen(),
         binding: SigninBinding(),
         // transition: Transition.rightToLeft
+    ),
+
+    GetPage(
+      name: signup,
+      page: () => const SignupScreen(),
+      binding: SignupBinding(),
+      // transition: Transition.rightToLeft
     ),
 
 

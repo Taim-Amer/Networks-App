@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:networks_app/bindings/signin_binding.dart';
+import 'package:networks_app/bindings/signup_binding.dart';
 import 'package:networks_app/localization/translations.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
 import 'package:networks_app/utils/router/app_router.dart';
@@ -16,15 +16,15 @@ class App extends StatelessWidget {
       designSize: Size(THelperFunctions.screenWidth(context), THelperFunctions.screenHeight(context)),
       builder: (_, child) =>  GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
-         initialRoute: AppRoutes.signin,
+        initialRoute: AppRoutes.signup,
         getPages: AppRoutes.routes,
         translations: TAppTranslations(),
         // locale: Locale(language ?? 'en'),
         // fallbackLocale: const Locale('en'),
-        initialBinding: SigninBinding(),
+        initialBinding: SignupBinding(),
       ),
     );
   }
