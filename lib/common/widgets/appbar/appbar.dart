@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:networks_app/common/widgets/buttons/back_icon.dart';
 import 'package:networks_app/utils/device/device_utility.dart';
 
