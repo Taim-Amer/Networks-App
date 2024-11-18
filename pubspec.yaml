@@ -62,20 +62,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 #
-##----------------- LOCAL ASSETS -----------------#
-#
-#  assets:
-#    - assets/logos/
-#    - assets/images/animations/
-#    - assets/images/user/
-#    - assets/logos/auth/
-#    - assets/icons/auth/
-#    - assets/images/shapes/
-#    - assets/icons/flags/
-#    - assets/logos/home/
-#    - assets/logos/profile/
-#    - assets/icons/global/
-#
+#----------------- LOCAL ASSETS -----------------#
+
+  assets:
+    - assets/images/
+
 ##----------------- LOCAL FONTS -----------------#
 #
 #  fonts:

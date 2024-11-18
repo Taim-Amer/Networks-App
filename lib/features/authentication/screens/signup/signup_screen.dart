@@ -18,14 +18,13 @@ class SignupScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Signup to Networks App".tr,
-                style: Theme.of(context).textTheme.displaySmall),
+            Text("Signup to Networks App".tr, style: Theme.of(context).textTheme.displaySmall),
             SizedBox(height: THelperFunctions.screenHeight(context) * 0.02),
             TRoundedContainer(
               padding: const EdgeInsets.all(20),
               width: THelperFunctions.screenWidth(context) * 0.3,
               child: Form(
-                key: signupController.signupFromState,
+                key: signupController.signInFormState,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -66,7 +65,7 @@ class SignupScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       height: 50.h,
-                      child: ElevatedButton(onPressed: () {}, child: const Text("Signup")),
+                      child: ElevatedButton(onPressed: () => signupController.signup(), child: const Text("Signup")),
                     ),
                   ],
                 ),

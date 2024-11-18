@@ -32,17 +32,45 @@ class TDioHelper {
     return _handleResponse(response);
   }
 
-
-  Future<Map<String, dynamic>> post(String endPoint, Map<String, dynamic> data, {String lang = 'en', String? token}) async {
+  Future<Map<String, dynamic>> post(
+      String endPoint,
+      Map<String, dynamic> data,
+      {String lang = 'en', String? token, String? imagePath}) async {
     dio.options.headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': imagePath != null ? 'multipart/form-data' : 'application/json',
       'lang': lang,
       'Authorization': token != null ? 'Bearer $token' : '',
     };
 
-    final response = await dio.post(endPoint, data: data);
+    dynamic requestData;
+    if (imagePath != null) {
+      requestData = FormData.fromMap({
+        ...data,
+        'image': await MultipartFile.fromFile(
+          imagePath,
+          filename: imagePath.split('/').last,
+        ),
+      });
+    } else {
+      requestData = data;
+    }
+
+    final response = await dio.post(endPoint, data: requestData);
     return _handleResponse(response);
   }
+
+
+
+  // Future<Map<String, dynamic>> post(String endPoint, Map<String, dynamic> data, {String lang = 'en', String? token}) async {
+  //   dio.options.headers = {
+  //     'Content-Type': 'application/json',
+  //     'lang': lang,
+  //     'Authorization': token != null ? 'Bearer $token' : '',
+  //   };
+  //
+  //   final response = await dio.post(endPoint, data: data);
+  //   return _handleResponse(response);
+  // }
 
   Future<Map<String, dynamic>> put(String endPoint, Map<String, dynamic> data, {String lang = 'en', String? token}) async {
     dio.options.headers = {

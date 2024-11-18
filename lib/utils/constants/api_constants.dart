@@ -7,4 +7,6 @@ class TApiConstants {
   static const String signup = "register";
 
   static const String refresh = "refresh";
+
+  static const String getFiles = "file/get";
 }

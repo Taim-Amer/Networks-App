@@ -13,7 +13,7 @@ class SignupController extends GetxController{
   final passwordController = TextEditingController();
   final passwordConfirmation = TextEditingController();
 
-  final GlobalKey<FormState> signupFromState = GlobalKey<FormState>();
+  final GlobalKey<FormState> signInFormState = GlobalKey<FormState>();
 
   final signupModel = SignupModel().obs;
 

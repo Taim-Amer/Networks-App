@@ -29,8 +29,7 @@ class SigninController extends GetxController {
           password: passwordController.text);
       if (signinModel.value.status == true) {
         updateStatus(value: RequestState.success);
-        TCacheHelper.saveData(
-            key: "token", value: signinModel.value.accessToken);
+        TCacheHelper.saveData(key: "token", value: signinModel.value.accessToken);
       }
     } catch (error) {
       updateStatus(value: RequestState.error);

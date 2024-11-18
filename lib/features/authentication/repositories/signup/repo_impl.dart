@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_return_type_for_catch_error
-
 import 'package:get/get.dart';
 import 'package:networks_app/features/authentication/models/signup_model.dart';
 import 'package:networks_app/features/authentication/repositories/signup/repo.dart';
@@ -13,7 +11,7 @@ class SignupRepositoryImpl implements SignupRepository  {
   @override
   Future<SignupModel> signup({required String name, required String email, required String password, required String passwordConfirmation, required String image}) {
     final dioHelper = TDioHelper();
-    return dioHelper.post(TApiConstants.signup, {
+    return dioHelper.post(TApiConstants.signup,{
       'name' : name,
       'email' : email,
       'password' : password,
@@ -22,3 +20,4 @@ class SignupRepositoryImpl implements SignupRepository  {
     }).then((response) => SignupModel.fromJson(response)).catchError((error) => TLoggerHelper.info(error.toString()));
   }
 }
+
