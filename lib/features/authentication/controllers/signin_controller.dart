@@ -6,11 +6,12 @@ import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
 
-class SigninController extends GetxController{
+class SigninController extends GetxController {
   static SigninController get instance => Get.find();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final GlobalKey<FormState> signInFormState = GlobalKey<FormState>();
 
   final signinModel = SigninModel().obs;
 
@@ -20,16 +21,18 @@ class SigninController extends GetxController{
     signinApiStatus.value = value;
   }
 
-
-  Future<void> signin() async{
+  Future<void> signin() async {
     updateStatus(value: RequestState.loading);
     try {
-      signinModel.value = await SigninRepositoryImpl.instance.signin(email: emailController.text.trim(), password: passwordController.text);
-      if(signinModel.value.status == true){
+      signinModel.value = await SigninRepositoryImpl.instance.signin(
+          email: emailController.text.trim(),
+          password: passwordController.text);
+      if (signinModel.value.status == true) {
         updateStatus(value: RequestState.success);
-        TCacheHelper.saveData(key: "token", value: signinModel.value.accessToken);
+        TCacheHelper.saveData(
+            key: "token", value: signinModel.value.accessToken);
       }
-    } catch(error){
+    } catch (error) {
       updateStatus(value: RequestState.error);
       THelperFunctions.showSnackBar(error.toString());
     }

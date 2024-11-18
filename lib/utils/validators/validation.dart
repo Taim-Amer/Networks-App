@@ -1,7 +1,6 @@
 import 'package:networks_app/localization/keys.dart';
 
 class TValidator {
-
   // static String? validateEmptyText(String? fieldName, String? value){
   //   if(value == null || value.isEmpty){
   //     return '${TranslationKey.kEmptyValidation}$fieldName';
@@ -10,36 +9,36 @@ class TValidator {
   // }
 
   static String? validateEmail(String? value) {
-    if(value == null || value.isEmpty){
+    if (value == null || value.isEmpty) {
       return TranslationKey.kEmptyValidation;
     }
 
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
-    if(!emailRegExp.hasMatch(value)){
+    if (!emailRegExp.hasMatch(value)) {
       return TranslationKey.kEmailInvalid;
     }
     return null;
   }
 
   static String? validatePassword(String? value) {
-    if(value == null || value.isEmpty){
-      return "Password is required" ;
+    if (value == null || value.isEmpty) {
+      return "Password is required";
     }
 
-    if(value.length < 6){
-      return "Password must be at least 6 characters long." ;
+    if (value.length < 6) {
+      return "Password must be at least 6 characters long.";
     }
 
-    if(!value.contains(RegExp(r'[A-Z]'))){
+    if (!value.contains(RegExp(r'[A-Z]'))) {
       return "Password must contain at least one uppercase letter.";
     }
 
-    if(!value.contains(RegExp(r'[0-9]'))){
+    if (!value.contains(RegExp(r'[0-9]'))) {
       return "Password must contain at least one number.";
     }
 
-    if(!value.contains(RegExp(r'[!@#$%^&*(),.?:{}|<>]'))){
+    if (!value.contains(RegExp(r'[!@#$%^&*(),.?:{}|<>]'))) {
       return "Password must contain at least one special character.";
     }
 
@@ -47,8 +46,8 @@ class TValidator {
   }
 
   static String? validatePhoneNumber(String? value) {
-    if(value == null || value.isEmpty){
-      return TranslationKey.kPhoneValidation ;
+    if (value == null || value.isEmpty) {
+      return TranslationKey.kPhoneValidation;
     }
 
     // final phoneRegExp = RegExp(r'^\d{10}$');
@@ -58,5 +57,4 @@ class TValidator {
     // }
     return null;
   }
-
 }

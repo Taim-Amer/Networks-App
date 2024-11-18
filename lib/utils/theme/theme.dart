@@ -22,7 +22,7 @@ class TAppTheme {
     primaryColor: TColors.primary,
     textTheme: TTextTheme.lightTextTheme,
     chipTheme: TChipTheme.lightChipTheme(false),
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: TColors.light,
     appBarTheme: TAppBarTheme.lightAppBarTheme,
     textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
     checkboxTheme: TCheckboxTheme.lightCheckboxTheme,
