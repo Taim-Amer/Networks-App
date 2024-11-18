@@ -5,6 +5,7 @@ import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_con
 import 'package:networks_app/common/widgets/text_fields/custom_text_field.dart';
 import 'package:networks_app/features/authentication/controllers/signin_controller.dart';
 import 'package:networks_app/utils/constants/colors.dart';
+import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
 import 'package:networks_app/utils/validators/validation.dart';
 
@@ -49,11 +50,19 @@ class SigninScreen extends StatelessWidget {
                     ),
                     SizedBox(
                         height: THelperFunctions.screenHeight(context) * 0.04),
-                    CustomButton(
-                      backgroundColor: TColors.secondary,
-                      onPressed: () {},
-                      textPrimary: "Sign In".tr,
-                      primaryTextStyle: Theme.of(context).textTheme.bodyMedium,
+                    Obx(
+                      () => signinController.signinApiStatus.value ==
+                              RequestState.loading
+                          ? const CircularProgressIndicator(
+                              color: TColors.primary,
+                            )
+                          : CustomButton(
+                              backgroundColor: TColors.secondary,
+                              onPressed: signinController.signin,
+                              textPrimary: "Sign In".tr,
+                              primaryTextStyle:
+                                  Theme.of(context).textTheme.bodyMedium,
+                            ),
                     ),
                     SizedBox(
                         height: THelperFunctions.screenHeight(context) * 0.02),
