@@ -19,7 +19,7 @@ class TElevatedButtonTheme {
         fontFamily: 'Almarai',
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(20),
       ),
     ),
   );
@@ -39,7 +39,7 @@ class TElevatedButtonTheme {
         fontFamily: 'Almarai',
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(20),
       ),
     ),
   );

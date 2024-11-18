@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
+import 'package:networks_app/utils/helpers/helper_functions.dart';
 
 class TRoundedContainer extends StatelessWidget {
   const TRoundedContainer({
@@ -32,13 +33,14 @@ class TRoundedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
     return Container(
       width: width,
       height: height,
       padding: padding,
       margin: margin,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: dark ? TColors.darkerGrey : backgroundColor,
         borderRadius: BorderRadius.circular(radius),
         border: showBorder ? Border.all(color: borderColor) : null,
         boxShadow: showShadow

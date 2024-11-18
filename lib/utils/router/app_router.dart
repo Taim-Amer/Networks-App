@@ -13,6 +13,7 @@ class AppRoutes {
         // transition: Transition.rightToLeft
     ),
 
+
   ];
 }
 
