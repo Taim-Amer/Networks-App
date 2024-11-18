@@ -22,19 +22,22 @@ class SigninController extends GetxController {
   }
 
   Future<void> signin() async {
-    updateStatus(value: RequestState.loading);
-    try {
-      signinModel.value = await SigninRepositoryImpl.instance.signin(
-          email: emailController.text.trim(),
-          password: passwordController.text);
-      if (signinModel.value.status == true) {
-        updateStatus(value: RequestState.success);
-        TCacheHelper.saveData(
-            key: "token", value: signinModel.value.accessToken);
+    if (signInFormState.currentState!.validate()) {
+      updateStatus(value: RequestState.loading);
+      try {
+        signinModel.value = await SigninRepositoryImpl.instance.signin(
+            email: emailController.text.trim(),
+            password: passwordController.text);
+        if (signinModel.value.status == true) {
+          updateStatus(value: RequestState.success);
+          TCacheHelper.saveData(
+              key: "token", value: signinModel.value.accessToken);
+          THelperFunctions.showSnackBar("Sign In Success");
+        }
+      } catch (error) {
+        updateStatus(value: RequestState.error);
+        THelperFunctions.showSnackBar(error.toString());
       }
-    } catch (error) {
-      updateStatus(value: RequestState.error);
-      THelperFunctions.showSnackBar(error.toString());
     }
   }
 }

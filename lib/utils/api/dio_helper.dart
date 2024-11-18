@@ -18,10 +18,14 @@ class TDioHelper {
         receiveDataWhenStatusError: true,
       ),
     );
-    dio.interceptors.add(PrettyDioLogger(requestBody: true, error: true, requestHeader: true));
+    dio.interceptors.add(
+        PrettyDioLogger(requestBody: true, error: true, requestHeader: true));
   }
 
-  Future<Map<String, dynamic>> get(String endPoint, {String lang = 'en', String? token, Map<String, dynamic>? queryParameters}) async {
+  Future<Map<String, dynamic>> get(String endPoint,
+      {String lang = 'en',
+      String? token,
+      Map<String, dynamic>? queryParameters}) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': lang,
@@ -32,8 +36,8 @@ class TDioHelper {
     return _handleResponse(response);
   }
 
-
-  Future<Map<String, dynamic>> post(String endPoint, Map<String, dynamic> data, {String lang = 'en', String? token}) async {
+  Future<Map<String, dynamic>> post(String endPoint, Map<String, dynamic> data,
+      {String lang = 'en', String? token}) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': lang,
@@ -44,7 +48,8 @@ class TDioHelper {
     return _handleResponse(response);
   }
 
-  Future<Map<String, dynamic>> put(String endPoint, Map<String, dynamic> data, {String lang = 'en', String? token}) async {
+  Future<Map<String, dynamic>> put(String endPoint, Map<String, dynamic> data,
+      {String lang = 'en', String? token}) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': lang,
@@ -55,7 +60,8 @@ class TDioHelper {
     return _handleResponse(response);
   }
 
-  Future<Map<String, dynamic>> delete(String endPoint, {String lang = 'en', String? token}) async {
+  Future<Map<String, dynamic>> delete(String endPoint,
+      {String lang = 'en', String? token}) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': lang,
