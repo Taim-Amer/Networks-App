@@ -7,7 +7,7 @@ import 'package:networks_app/utils/api/dio_helper.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
 import 'package:networks_app/utils/logging/logger.dart';
 
-class SignupRepositoryImpl implements SignupRepository{
+class SignupRepositoryImpl implements SignupRepository  {
   static SignupRepositoryImpl get instance => Get.find();
 
   @override

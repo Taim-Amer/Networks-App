@@ -5,7 +5,7 @@ import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
 
-class RefreshController extends GetxController{
+class RefreshController extends GetxController {
   static RefreshController get instance => Get.find();
 
   final refreshModel = RefreshModel().obs;
@@ -16,6 +16,7 @@ class RefreshController extends GetxController{
     refreshApiStatus.value = value;
   }
 
+  @override
   Future<void> refresh() async{
     updateStatus(value: RequestState.loading);
     try{
