@@ -24,7 +24,7 @@ class App extends StatelessWidget {
         translations: TAppTranslations(),
         // locale: Locale(language ?? 'en'),
         // fallbackLocale: const Locale('en'),
-        initialBinding: SigninBinding(),
+        initialBinding: SigninBinding()
       ),
     );
   }

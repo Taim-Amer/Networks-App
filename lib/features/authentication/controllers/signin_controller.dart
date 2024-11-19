@@ -4,6 +4,7 @@ import 'package:networks_app/features/authentication/models/signin_model.dart';
 import 'package:networks_app/features/authentication/repositories/signin/repo_impl.dart';
 import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
+import 'package:networks_app/utils/router/app_router.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
 
 class SigninController extends GetxController {
@@ -32,7 +33,12 @@ class SigninController extends GetxController {
           updateStatus(value: RequestState.success);
           TCacheHelper.saveData(
               key: "token", value: signinModel.value.accessToken);
+          TCacheHelper.saveData(key: "isUserLogin", value: true);
+          TCacheHelper.saveData(
+              key: "userID", value: signinModel.value.userData!.id);
           THelperFunctions.showSnackBar("Sign In Success");
+
+          Get.offNamedUntil(AppRoutes.home, (route) => false);
         }
       } catch (error) {
         updateStatus(value: RequestState.error);

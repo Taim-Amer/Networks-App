@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
+import 'package:networks_app/utils/storage/cache_helper.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class TDioHelper {
@@ -26,57 +26,78 @@ class TDioHelper {
       {String lang = 'en',
       String? token,
       Map<String, dynamic>? queryParameters}) async {
-    dio.options.headers = {
-      'Content-Type': 'application/json',
-      'lang': lang,
-      'Authorization': token != null ? 'Bearer $token' : '',
-    };
-
-    final response = await dio.get(endPoint, queryParameters: queryParameters);
-    return _handleResponse(response);
+    return await _makeRequest(
+      () => dio.get(endPoint, queryParameters: queryParameters),
+      lang: lang,
+      token: token,
+    );
   }
 
   Future<Map<String, dynamic>> post(String endPoint, Map<String, dynamic> data,
       {String lang = 'en', String? token}) async {
+    return await _makeRequest(
+      () => dio.post(endPoint, data: data),
+      lang: lang,
+      token: token,
+    );
+  }
+
+  Future<Map<String, dynamic>> put(String endPoint, Map<String, dynamic> data,
+      {String lang = 'en', String? token}) async {
+    return await _makeRequest(
+      () => dio.put(endPoint, data: data),
+      lang: lang,
+      token: token,
+    );
+  }
+
+  Future<Map<String, dynamic>> delete(String endPoint,
+      {String lang = 'en', String? token}) async {
+    return await _makeRequest(
+      () => dio.delete(endPoint),
+      lang: lang,
+      token: token,
+    );
+  }
+
+  Future<Map<String, dynamic>> _makeRequest(Future<Response> Function() request,
+      {String lang = 'en', String? token}) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': lang,
       'Authorization': token != null ? 'Bearer $token' : '',
     };
 
-    final response = await dio.post(endPoint, data: data);
-    return _handleResponse(response);
-  }
-
-  Future<Map<String, dynamic>> put(String endPoint, Map<String, dynamic> data,
-      {String lang = 'en', String? token}) async {
-    dio.options.headers = {
-      'Content-Type': 'application/json',
-      'lang': lang,
-      'Authorization': token ?? '',
-    };
-
-    final response = await dio.put(endPoint, data: data);
-    return _handleResponse(response);
-  }
-
-  Future<Map<String, dynamic>> delete(String endPoint,
-      {String lang = 'en', String? token}) async {
-    dio.options.headers = {
-      'Content-Type': 'application/json',
-      'lang': lang,
-      'Authorization': token ?? '',
-    };
-
-    final response = await dio.delete(endPoint);
-    return _handleResponse(response);
-  }
-
-  Map<String, dynamic> _handleResponse(Response response) {
-    if (response.statusCode == 200) {
-      return response.data is Map ? response.data : json.decode(response.data);
-    } else {
+    Response response;
+    try {
+      response = await request();
+      if (response.statusCode == 200 || response.statusCode == 400) {
+        return response.data;
+      } else if (response.statusCode == 401) {
+        String? newToken = await refreshToken();
+        if (newToken != null) {
+          dio.options.headers['Authorization'] = 'Bearer $newToken';
+          response = await request(); // Retry the request with the new token
+          return response.data;
+        }
+      }
       throw Exception("Failed to load data: ${response.statusCode}");
+    } catch (e) {
+      throw Exception("Request failed: $e");
     }
+  }
+
+  Future<String?> refreshToken() async {
+    print("refreshing token");
+    Response response = await dio.post(TApiConstants.refresh,
+        options: Options(headers: {
+          'Authorization': 'Bearer ${TCacheHelper.getData(key: "token")}'
+        }));
+    if (response.statusCode == 200) {
+      String newToken = response.data['token'];
+      TCacheHelper.saveData(key: "token", value: newToken);
+      return newToken;
+    }
+    return null;
   }
 }

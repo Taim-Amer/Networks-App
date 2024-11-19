@@ -20,21 +20,21 @@ class SigninScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Sign in to Networks App".tr,
+            Text("Sign in to Networks App",
                 style: Theme.of(context).textTheme.displaySmall),
             SizedBox(height: THelperFunctions.screenHeight(context) * 0.02),
             TRoundedContainer(
               padding: const EdgeInsets.all(20),
               width: THelperFunctions.screenWidth(context) *
                   0.3, // Fixed width for the form
-
               child: Form(
-                key: signinController.signInFormState,
+                key: signinController
+                    .signInFormState, // Ensure this key isn't reused elsewhere
                 child: Column(
                   mainAxisSize: MainAxisSize.min, // To wrap the content
                   children: [
                     CustomTextField(
-                      hintText: "Enter your Email".tr,
+                      hintText: "Enter your Email",
                       keyboardType: TextInputType.emailAddress,
                       validator: TValidator.validateEmail,
                       controller: signinController.emailController,
@@ -42,8 +42,7 @@ class SigninScreen extends StatelessWidget {
                     SizedBox(
                         height: THelperFunctions.screenHeight(context) * 0.02),
                     CustomTextField(
-                      hintText: "Enter your password".tr,
-                      keyboardType: TextInputType.emailAddress,
+                      hintText: "Enter your password",
                       obscureText: true,
                       validator: TValidator.validatePassword,
                       controller: signinController.passwordController,
@@ -54,12 +53,11 @@ class SigninScreen extends StatelessWidget {
                       () => signinController.signinApiStatus.value ==
                               RequestState.loading
                           ? const CircularProgressIndicator(
-                              color: TColors.primary,
-                            )
+                              color: TColors.primary)
                           : CustomButton(
                               backgroundColor: TColors.secondary,
                               onPressed: signinController.signin,
-                              textPrimary: "Sign In".tr,
+                              textPrimary: "Sign In",
                               primaryTextStyle:
                                   Theme.of(context).textTheme.bodyMedium,
                             ),
@@ -70,7 +68,7 @@ class SigninScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'New to our app?'.tr,
+                          'New to our app?',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -80,7 +78,7 @@ class SigninScreen extends StatelessWidget {
                           onPressed:
                               () {}, // Functionality for new account creation
                           child: Text(
-                            'Create an account'.tr,
+                            'Create an account',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!

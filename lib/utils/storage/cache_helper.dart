@@ -11,7 +11,7 @@ class TCacheHelper {
   static dynamic getData({
     required String key,
   })  {
-    return sharedPreferences?.get(key);
+    return sharedPreferences?.get(key) ?? false ;
   }
 
   static Future<bool> saveData({
