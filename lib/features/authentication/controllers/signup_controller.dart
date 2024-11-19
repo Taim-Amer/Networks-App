@@ -13,6 +13,8 @@ class SignupController extends GetxController{
   final passwordController = TextEditingController();
   final passwordConfirmation = TextEditingController();
 
+  final GlobalKey<FormState> signInFormState = GlobalKey<FormState>();
+
   final signupModel = SignupModel().obs;
 
   var signupApiStatus = RequestState.begin.obs;

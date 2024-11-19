@@ -10,7 +10,6 @@ class CustomTextField extends StatelessWidget {
   final GlobalKey<FormState>? formKey;
   final Widget? prefixIcon;
   final bool autoValidate;
-  final TextStyle? textStyle;
 
   const CustomTextField({
     super.key,
@@ -22,31 +21,23 @@ class CustomTextField extends StatelessWidget {
     this.formKey,
     this.prefixIcon,
     this.autoValidate = false,
-    this.textStyle,
   });
 
   @override
   Widget build(BuildContext context) {
-    // final customColors = Theme.of(context).extension<AppColorsExtension>()!;
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
-      style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
         counterText: "",
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         hintText: hintText?.tr,
         prefixIcon: prefixIcon,
       ),
       validator: validator,
-      autovalidateMode: autoValidate
-          ? AutovalidateMode.onUserInteraction
-          : AutovalidateMode.disabled,
+      // autovalidateMode: autoValidate
+      //     ? AutovalidateMode.onUserInteraction
+      //     : AutovalidateMode.disabled,
     );
   }
 }

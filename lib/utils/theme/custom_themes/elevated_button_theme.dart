@@ -18,11 +18,8 @@ class TElevatedButtonTheme {
         fontWeight: FontWeight.w600,
         fontFamily: 'Almarai',
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-    ),
-  );
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))
+  ));
 
   static final darkElevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -38,9 +35,6 @@ class TElevatedButtonTheme {
         fontWeight: FontWeight.w600,
         fontFamily: 'Almarai',
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-    ),
-  );
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))
+  ));
 }

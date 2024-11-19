@@ -27,6 +27,7 @@ dependencies:
   loading_animation_widget: ^1.3.0
   scroll_date_picker: ^3.8.0
   dartz: ^0.10.1
+  flutter_gen: ^5.8.0
 
   # Icons
   iconsax: ^0.0.8
@@ -61,20 +62,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 #
-##----------------- LOCAL ASSETS -----------------#
-#
-#  assets:
-#    - assets/logos/
-#    - assets/images/animations/
-#    - assets/images/user/
-#    - assets/logos/auth/
-#    - assets/icons/auth/
-#    - assets/images/shapes/
-#    - assets/icons/flags/
-#    - assets/logos/home/
-#    - assets/logos/profile/
-#    - assets/icons/global/
-#
+#----------------- LOCAL ASSETS -----------------#
+
+  assets:
+    - assets/images/
+
 ##----------------- LOCAL FONTS -----------------#
 #
 #  fonts:

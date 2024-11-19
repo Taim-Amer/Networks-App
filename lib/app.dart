@@ -16,10 +16,10 @@ class App extends StatelessWidget {
       designSize: Size(THelperFunctions.screenWidth(context), THelperFunctions.screenHeight(context)),
       builder: (_, child) =>  GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
-         initialRoute: AppRoutes.signin,
+        initialRoute: AppRoutes.signin,
         getPages: AppRoutes.routes,
         translations: TAppTranslations(),
         // locale: Locale(language ?? 'en'),

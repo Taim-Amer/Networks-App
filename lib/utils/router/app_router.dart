@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:networks_app/bindings/group_bindings.dart';
 import 'package:networks_app/bindings/home_bindings.dart';
 import 'package:networks_app/bindings/signin_binding.dart';
+import 'package:networks_app/bindings/signup_binding.dart';
 import 'package:networks_app/features/authentication/screens/signin/signin_screen.dart';
 import 'package:networks_app/features/groups/screens/group_screen.dart';
 import 'package:networks_app/features/home/screens/home_screen.dart';
