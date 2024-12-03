@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:networks_app/common/widgets/alerts/snackbar.dart';
 import 'package:networks_app/features/authentication/models/signin_model.dart';
 import 'package:networks_app/features/authentication/repositories/signin/repo_impl.dart';
 import 'package:networks_app/utils/constants/enums.dart';
@@ -33,12 +34,10 @@ class SigninController extends GetxController {
           updateStatus(value: RequestState.success);
           TCacheHelper.saveData(
               key: "token", value: signinModel.value.accessToken);
-          TCacheHelper.saveData(key: "isUserLogin", value: true);
           TCacheHelper.saveData(
               key: "userID", value: signinModel.value.userData!.id);
-          THelperFunctions.showSnackBar("Sign In Success");
-
-          Get.offNamedUntil(AppRoutes.home, (route) => false);
+          showSnackBar("Sign In Success", AlertState.success);
+          Get.offAllNamed(AppRoutes.home);
         }
       } catch (error) {
         updateStatus(value: RequestState.error);

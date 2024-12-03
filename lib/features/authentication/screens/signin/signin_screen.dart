@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:networks_app/common/widgets/buttons/custom_button.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
@@ -6,7 +7,9 @@ import 'package:networks_app/common/widgets/text_fields/custom_text_field.dart';
 import 'package:networks_app/features/authentication/controllers/signin_controller.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/enums.dart';
+import 'package:networks_app/utils/constants/sizes.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
+import 'package:networks_app/utils/router/app_router.dart';
 import 'package:networks_app/utils/validators/validation.dart';
 
 class SigninScreen extends StatelessWidget {
@@ -20,35 +23,32 @@ class SigninScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Sign in to Networks App",
-                style: Theme.of(context).textTheme.displaySmall),
+            Text("Sign in to Networks App", style: Theme.of(context).textTheme.headlineMedium),
             SizedBox(height: THelperFunctions.screenHeight(context) * 0.02),
             TRoundedContainer(
+              showBorder: true,
               padding: const EdgeInsets.all(20),
-              width: THelperFunctions.screenWidth(context) *
-                  0.3, // Fixed width for the form
+              width: THelperFunctions.screenWidth(context) * 0.2,
+              radius: 10,
               child: Form(
-                key: signinController
-                    .signInFormState, // Ensure this key isn't reused elsewhere
+                key: signinController.signInFormState,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min, // To wrap the content
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CustomTextField(
-                      hintText: "Enter your Email",
+                      text: 'Enter your Email',
                       keyboardType: TextInputType.emailAddress,
                       validator: TValidator.validateEmail,
                       controller: signinController.emailController,
                     ),
-                    SizedBox(
-                        height: THelperFunctions.screenHeight(context) * 0.02),
+                    TSizes.defaultSpace.verticalSpace,
                     CustomTextField(
-                      hintText: "Enter your password",
+                      text: 'Enter your password',
                       obscureText: true,
                       validator: TValidator.validatePassword,
                       controller: signinController.passwordController,
                     ),
-                    SizedBox(
-                        height: THelperFunctions.screenHeight(context) * 0.04),
+                    TSizes.defaultSpace.verticalSpace,
                     Obx(
                       () => signinController.signinApiStatus.value ==
                               RequestState.loading
@@ -62,34 +62,29 @@ class SigninScreen extends StatelessWidget {
                                   Theme.of(context).textTheme.bodyMedium,
                             ),
                     ),
-                    SizedBox(
-                        height: THelperFunctions.screenHeight(context) * 0.02),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'New to our app?',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.grey),
-                        ),
-                        TextButton(
-                          onPressed:
-                              () {}, // Functionality for new account creation
-                          child: Text(
-                            'Create an account',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(color: Colors.grey),
-                          ),
-                        ),
-                      ],
-                    )
+                    TSizes.spaceBtwInputField.verticalSpace,
                   ],
                 ),
               ),
+            ),
+            SizedBox(height: THelperFunctions.screenHeight(context) * 0.02),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'New to our app?',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.grey),
+                ),
+                TextButton(
+                  onPressed: () => Get.toNamed(AppRoutes.signup),
+                  child: const Text(
+                    'Create an account',
+                  ),
+                ),
+              ],
             ),
           ],
         ),

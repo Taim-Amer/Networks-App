@@ -14,10 +14,10 @@ class SigninModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['access_token'] = this.accessToken;
-    data['expires_in'] = this.expiresIn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['access_token'] = accessToken;
+    data['expires_in'] = expiresIn;
     if (userData != null) {
       data['user_data'] = userData!.toJson();
     }
@@ -45,13 +45,13 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['email'] = this.email;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['email'] = email;
+    data['name'] = name;
+    data['image'] = image;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

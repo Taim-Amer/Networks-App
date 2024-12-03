@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
+import 'package:networks_app/utils/logging/logger.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'dart:typed_data';
 
 class TDioHelper {
   static final TDioHelper _instance = TDioHelper._internal();
@@ -18,8 +20,7 @@ class TDioHelper {
         receiveDataWhenStatusError: true,
       ),
     );
-    dio.interceptors.add(
-        PrettyDioLogger(requestBody: true, error: true, requestHeader: true));
+    dio.interceptors.add(PrettyDioLogger(requestBody: true, error: true, requestHeader: true));
   }
 
   Future<Map<String, dynamic>> get(String endPoint,
@@ -33,13 +34,39 @@ class TDioHelper {
     );
   }
 
-  Future<Map<String, dynamic>> post(String endPoint, Map<String, dynamic> data,
-      {String lang = 'en', String? token}) async {
+  Future<Map<String, dynamic>> post(String endPoint, {required Map<String, dynamic> data, String lang = 'en', String? token}) async {
     return await _makeRequest(
       () => dio.post(endPoint, data: data),
       lang: lang,
       token: token,
     );
+  }
+
+  Future<Map<String, dynamic>> postWithImage(String endPoint, Map<String, dynamic> data, {required Uint8List imageBytes}) async {
+    try {
+      final formData = FormData.fromMap({
+        ...data,
+        'image': MultipartFile.fromBytes(
+          imageBytes,
+          filename: 'image.png',
+        ),
+      });
+
+      final response = await Dio().post(
+        endPoint,
+        data: formData,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            // 'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response.data;
+    } catch (error) {
+      TLoggerHelper.error(error.toString());
+      rethrow;
+    }
   }
 
   Future<Map<String, dynamic>> put(String endPoint, Map<String, dynamic> data,
@@ -77,7 +104,7 @@ class TDioHelper {
         String? newToken = await refreshToken();
         if (newToken != null) {
           dio.options.headers['Authorization'] = 'Bearer $newToken';
-          response = await request(); // Retry the request with the new token
+          response = await request();
           return response.data;
         }
       }

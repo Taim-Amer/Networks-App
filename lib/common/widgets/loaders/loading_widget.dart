@@ -9,6 +9,7 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoadingAnimationWidget.waveDots(color: TColors.buttonPrimary, size: 70);
+    return const CircularProgressIndicator(color: TColors.primary,);
+    // return LoadingAnimationWidget.waveDots(color: TColors.primary, size: 70);
   }
 }

@@ -28,11 +28,14 @@ dependencies:
   scroll_date_picker: ^3.8.0
   dartz: ^0.10.1
   flutter_gen: ^5.8.0
+  path_provider: ^2.0.11
+  flutter_side_menu: ^0.5.41
+  google_fonts: ^6.2.1
 
   # Icons
   iconsax: ^0.0.8
   cupertino_icons: ^1.0.6
-  flutter_svg: ^2.0.10+1
+  flutter_svg: ^2.0.15
 
   # State Management
   get: ^4.6.6
@@ -50,6 +53,10 @@ dependencies:
   dio: ^5.7.0
   pretty_dio_logger: ^1.4.0
 
+  # Pickers
+  image_picker: ^1.1.2
+  fl_chart: ^0.69.2
+
 
 #----------------- ./ PACKAGES END -----------------#
 #
@@ -61,24 +68,35 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-#
+
 #----------------- LOCAL ASSETS -----------------#
 
   assets:
     - assets/images/
+    - assets/icons/
 
-##----------------- LOCAL FONTS -----------------#
-#
-#  fonts:
-#    - family: Almarai
-#      fonts:
-#        - asset: assets/fonts/Almarai-Light.ttf
-#          weight: 300
-#        - asset: assets/fonts/Almarai-Regular.ttf
-#          weight: 400
-#        - asset: assets/fonts/Almarai-Bold.ttf
-#          weight: 600
-#        - asset: assets/fonts/Almarai-ExtraBold.ttf
-#          weight: 800
+#----------------- LOCAL FONTS -----------------#
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Black.ttf
+        - asset: assets/fonts/Poppins-BlackItalic.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins-BoldItalic.ttf
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+        - asset: assets/fonts/Poppins-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Poppins-ExtraLight.ttf
+        - asset: assets/fonts/Poppins-ExtraLightItalic.ttf
+        - asset: assets/fonts/Poppins-Italic.ttf
+        - asset: assets/fonts/Poppins-Light.ttf
+        - asset: assets/fonts/Poppins-LightItalic.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+        - asset: assets/fonts/Poppins-MediumItalic.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Poppins-SemiBoldItalic.ttf
+        - asset: assets/fonts/Poppins-Thin.ttf
+        - asset: assets/fonts/Poppins-ThinItalic.ttf
 
 

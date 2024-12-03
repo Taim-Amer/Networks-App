@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:networks_app/features/authentication/models/signup_model.dart';
 import 'package:networks_app/features/authentication/repositories/signup/repo.dart';
@@ -9,15 +10,30 @@ class SignupRepositoryImpl implements SignupRepository  {
   static SignupRepositoryImpl get instance => Get.find();
 
   @override
-  Future<SignupModel> signup({required String name, required String email, required String password, required String passwordConfirmation, required String image}) {
+  Future<SignupModel> signup({
+    required String name,
+    required String email,
+    required String password,
+    required String passwordConfirmation,
+    // required Uint8List image,
+  }) async {
     final dioHelper = TDioHelper();
-    return dioHelper.post(TApiConstants.signup,{
-      'name' : name,
-      'email' : email,
-      'password' : password,
-      'password_confirmation' : passwordConfirmation,
-      'image' : image,
-    }).then((response) => SignupModel.fromJson(response)).catchError((error) => TLoggerHelper.info(error.toString()));
+    try {
+      final response = await dioHelper.post(
+        TApiConstants.signup,
+        data: {
+          'name': name,
+          'email': email,
+          'password': password,
+          'password_confirmation': passwordConfirmation,
+        },
+        // imageBytes: image,
+      );
+      return SignupModel.fromJson(response);
+    } catch (error) {
+      TLoggerHelper.info(error.toString());
+      rethrow;
+    }
   }
 }
 

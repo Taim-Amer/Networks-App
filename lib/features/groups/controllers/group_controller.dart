@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:networks_app/features/groups/models/group_inviation_model.dart';
+import 'package:networks_app/common/widgets/alerts/snackbar.dart';
+import 'package:networks_app/features/groups/models/group_model.dart';
+import 'package:networks_app/features/groups/models/users_in_group_model.dart';
 import 'package:networks_app/features/groups/models/users_out_group_model.dart';
 import 'package:networks_app/features/groups/repositories/group_repo_impl.dart';
-import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/enums.dart';
+import 'package:networks_app/utils/logging/logger.dart';
 
 class GroupController extends GetxController {
   static GroupController get instance => Get.find();
@@ -13,61 +15,135 @@ class GroupController extends GetxController {
   var groupId = 0.obs;
 
   var getUsersOutGroupState = RequestState.begin.obs;
-  var createInviationState = RequestState.begin.obs;
+  var getUsersInGroupState = RequestState.begin.obs;
+  var createInvitationState = RequestState.begin.obs;
+  var getGroupsApiStatus = RequestState.begin.obs;
+  var createGroupsApiStatus = RequestState.begin.obs;
+
+  final groupNameController = TextEditingController();
 
   final GroupRepoImpl groupRepositoryImpl = GroupRepoImpl.instance;
 
-  void updateStatus(RequestState value) {
+  final Rx<UsersOutGroupModel> usersOutGroupModel = UsersOutGroupModel().obs;
+  final Rx<UsersInGroupModel> usersInGroupModel = UsersInGroupModel().obs;
+  final Rx<GroupModel> groupModel = GroupModel().obs;
+
+  void updateGetUserOutGroupStatus(RequestState value) {
     getUsersOutGroupState.value = value;
   }
 
-  final Rx<UsersOutGroupModel> usersOutGroupModel = UsersOutGroupModel().obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    isOwner.value = Get.parameters['IsOwner'] == "true";
-    groupId.value = int.parse(Get.parameters['groupID'] ?? '0');
-    if (isOwner.value) {
-      getUsersOutGroup();
-    }
+  void updateGetUserInGroupStatus(RequestState value) {
+    getUsersInGroupState.value = value;
   }
 
-  Future<void> createInviation({String? userID}) async {
-    createInviationState.value = RequestState.loading;
+  void updateGetGroupsStatus(RequestState value) {
+    getGroupsApiStatus.value = value;
+  }
+
+  void updateCreateGroupsStatus(RequestState value) {
+    createGroupsApiStatus.value = value;
+  }
+
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   print("-----------------------");
+  //   getGroups();
+  //   isOwner.value = Get.parameters['IsOwner'] == "true";
+  //   groupId.value = int.parse(Get.parameters['groupID'] ?? '0');
+  //   if (isOwner.value) {
+  //     getUsersOutGroup();
+  //   }
+  // }
+
+  bool isUserOwner(int groupId) {
+    final groups = groupModel.value.response;
+    if (groups == null || groups.isEmpty) {
+      return false;
+    }
+    return groups.any((group) => group.id == groupId && (group.isOwner ?? false));
+  }
+
+  Future<void> createInvitation({required int userID, required int groupID}) async {
+    createInvitationState.value = RequestState.loading;
     try {
-      GroupInvitationResponse response = await groupRepositoryImpl
-          .groupInviation(groupID: groupId.value.toString(), userID: userID);
-      if (response.status == true &&
-          response.message == "The invitation has send successfully.") {
-        createInviationState.value = RequestState.success;
-        Get.snackbar("Success", "The invitation has send successfully.",
-            backgroundColor: TColors.secondary, colorText: Colors.white);
+      final response = await groupRepositoryImpl.groupInvitation(groupID: groupID, userID: userID);
+      if (response.status == true) {
+        createInvitationState.value = RequestState.success;
+        showSnackBar(response.message ?? '', AlertState.success);
       } else {
-        createInviationState.value = RequestState.error;
+        createInvitationState.value = RequestState.error;
       }
     } catch (error) {
-      createInviationState.value = RequestState.error;
-      // ignore: avoid_print
-      print("Error fetching groups: $error");
+      createInvitationState.value = RequestState.error;
+      showSnackBar('There is previous invitation for this user to this group.', AlertState.warning);
+      TLoggerHelper.info(error.toString());
     }
   }
 
-  Future<void> getUsersOutGroup() async {
-    updateStatus(RequestState.loading);
+  Future<void> getUsersOutGroup({required int groupID}) async {
+    updateGetUserOutGroupStatus(RequestState.loading);
     try {
-      UsersOutGroupModel fetchedUsers = await groupRepositoryImpl
-          .getUsersOutGroup(groupID: groupId.value.toString());
+      UsersOutGroupModel fetchedUsers = await groupRepositoryImpl.getUsersOutGroup(groupID: groupID.toString());
       if (fetchedUsers.status == true) {
         usersOutGroupModel.value = fetchedUsers;
-        updateStatus(RequestState.success);
+        updateGetUserOutGroupStatus(RequestState.success);
       } else {
-        updateStatus(RequestState.error);
+        updateGetUserOutGroupStatus(RequestState.error);
       }
     } catch (error) {
-      updateStatus(RequestState.error);
-      // ignore: avoid_print
-      print("Error fetching groups: $error");
+      updateGetUserOutGroupStatus(RequestState.error);
+    }
+  }
+
+  Future<void> getUsersInGroup({required int groupID}) async {
+    updateGetUserInGroupStatus(RequestState.loading);
+    try {
+      final response = await groupRepositoryImpl.getUsersInGroup(groupID: groupID);
+      if (response.status == true) {
+        usersInGroupModel.value = response;
+        updateGetUserInGroupStatus(RequestState.success);
+      } else {
+        updateGetUserInGroupStatus(RequestState.error);
+      }
+    } catch (error) {
+      TLoggerHelper.warning(error.toString());
+      updateGetUserInGroupStatus(RequestState.error);
+    }
+  }
+
+  Future<void> getGroups() async{
+    updateGetGroupsStatus(RequestState.loading);
+    try{
+      final response = groupModel.value = await GroupRepoImpl.instance.getGroups();
+      if(response.status == true){
+        isOwner.value = response.response!.any((group) => group.isOwner == true);
+        if(response.response!.isEmpty){
+          updateGetGroupsStatus(RequestState.noData);
+        } else{
+          updateGetGroupsStatus(RequestState.success);
+        }
+      }
+    } catch(error){
+      updateGetGroupsStatus(RequestState.error);
+    }
+  }
+
+  Future<void> createGroup() async{
+    updateCreateGroupsStatus(RequestState.loading);
+    try{
+      final response = await GroupRepoImpl.instance.createGroup(name: groupNameController.text);
+      if(response.status == true){
+        updateCreateGroupsStatus(RequestState.success);
+        Get.back();
+        await getGroups();
+        showSnackBar(response.response ?? "", AlertState.success);
+      } else{
+        updateCreateGroupsStatus(RequestState.error);
+      }
+    } catch(error){
+      updateCreateGroupsStatus(RequestState.error);
+      TLoggerHelper.error(error.toString());
     }
   }
 }

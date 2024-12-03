@@ -1,38 +1,61 @@
-// ignore_for_file: invalid_return_type_for_catch_error
-
 import 'package:get/get.dart';
-import 'package:networks_app/features/groups/models/group_inviation_model.dart';
+import 'package:networks_app/features/groups/models/create_group_model.dart';
+import 'package:networks_app/features/groups/models/group_invitation_model.dart';
+import 'package:networks_app/features/groups/models/group_model.dart';
+import 'package:networks_app/features/groups/models/users_in_group_model.dart';
 import 'package:networks_app/features/groups/models/users_out_group_model.dart';
 import 'package:networks_app/features/groups/repositories/group_repo.dart';
 import 'package:networks_app/utils/api/dio_helper.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
-import 'package:networks_app/utils/logging/logger.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
 
 class GroupRepoImpl implements GroupRepo {
   static GroupRepoImpl get instance => Get.find();
+
+  final token = TCacheHelper.getData(key: "token");
+
   @override
-  Future<UsersOutGroupModel> getUsersOutGroup(
-      {required String? groupID}) async {
+  Future<UsersOutGroupModel> getUsersOutGroup({required String? groupID}) async {
     final dioHelper = TDioHelper();
     return await dioHelper
         .get(TApiConstants.usersOutGroup,
-            token: TCacheHelper.getData(key: "token"),
+            token: token,
             queryParameters: {"group_id": groupID})
-        .then((response) => UsersOutGroupModel.fromJson(response))
-        .catchError((error) => TLoggerHelper.error(error.toString()));
+        .then((response) => UsersOutGroupModel.fromJson(response));
   }
 
   @override
-  Future<GroupInvitationResponse> groupInviation(
-      {required String? groupID, required String? userID}) async {
+  Future<GroupInvitationResponse> groupInvitation({required int groupID, required int userID}) async {
+    final dioHelper = TDioHelper();
+    return await dioHelper.post(
+      TApiConstants.groupInvitation,
+      token: token,
+      data: {"group_id": groupID, "user_id": userID}).then((response) => GroupInvitationResponse.fromJson(response));
+  }
+
+  @override
+  Future<GroupModel> getGroups() async{
     final dioHelper = TDioHelper();
     return await dioHelper
-        .post(
-            TApiConstants.groupInviation,
-            token: TCacheHelper.getData(key: "token"),
-            {"group_id": groupID, "user_id": userID})
-        .then((response) => GroupInvitationResponse.fromJson(response))
-        .catchError((error) => TLoggerHelper.error(error.toString()));
+        .get(TApiConstants.getGroups, token: TCacheHelper.getData(key: 'token'))
+        .then((response) => GroupModel.fromJson(response));
+  }
+
+  @override
+  Future<CreateGroupModel> createGroup({required String name}) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.post(
+      TApiConstants.createGroup,
+      token: token,
+      data: {'name' : name}).then((response) => CreateGroupModel.fromJson(response));
+  }
+
+  @override
+  Future<UsersInGroupModel> getUsersInGroup({required int groupID}) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.get(
+      TApiConstants.usersInGroup,
+      token: token,
+      queryParameters: {"group_id": groupID}).then((response) => UsersInGroupModel.fromJson(response));
   }
 }

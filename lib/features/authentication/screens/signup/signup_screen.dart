@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:networks_app/common/widgets/pickers/image_picker.dart';
 import 'package:networks_app/common/widgets/text_fields/custom_text_field.dart';
 import 'package:networks_app/features/authentication/controllers/signup_controller.dart';
+import 'package:networks_app/utils/constants/sizes.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
 import 'package:networks_app/utils/validators/validation.dart';
 
@@ -18,55 +20,54 @@ class SignupScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Signup to Networks App".tr, style: Theme.of(context).textTheme.displaySmall),
+            Text("Signup to Networks App".tr, style: Theme.of(context).textTheme.headlineMedium),
             SizedBox(height: THelperFunctions.screenHeight(context) * 0.02),
             TRoundedContainer(
+              showBorder: true,
               padding: const EdgeInsets.all(20),
-              width: THelperFunctions.screenWidth(context) * 0.3,
+              width: THelperFunctions.screenWidth(context) * 0.2,
+              radius: 10,
               child: Form(
-                key: signupController.signInFormState,
+                key: signupController.signupFormState,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    // const TImagePicker(),
                     CustomTextField(
-                      hintText: "Enter your Name".tr,
+                      text: 'Enter your Name',
                       keyboardType: TextInputType.text,
                       validator: (value) => TValidator.validateEmptyText("Name", value),
                       controller: signupController.nameController,
                     ),
-                    SizedBox(
-                        height: THelperFunctions.screenHeight(context) * 0.02),
+                    TSizes.defaultSpace.verticalSpace,
                     CustomTextField(
-                      hintText: "Enter your Email".tr,
+                      text: 'Enter your Email',
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) => TValidator.validateEmail(value),
                       controller: signupController.emailController,
                     ),
-                    SizedBox(
-                        height: THelperFunctions.screenHeight(context) * 0.02),
+                    TSizes.defaultSpace.verticalSpace,
                     CustomTextField(
-                      hintText: "Enter your password".tr,
+                      text: 'Enter your password',
                       keyboardType: TextInputType.text,
                       obscureText: true,
                       validator: (value) => TValidator.validatePassword(value),
                       controller: signupController.passwordController,
                     ),
-                    SizedBox(
-                        height: THelperFunctions.screenHeight(context) * 0.02),
+                    TSizes.defaultSpace.verticalSpace,
                     CustomTextField(
-                      hintText: "Enter your password confirmation".tr,
+                      text: 'Enter your password confirmation',
                       keyboardType: TextInputType.text,
                       obscureText: true,
                       validator: (value) => TValidator.validatePassword(value),
                       controller: signupController.passwordConfirmation,
                     ),
-                    SizedBox(
-                        height: THelperFunctions.screenHeight(context) * 0.04),
+                    TSizes.defaultSpace.verticalSpace,
                     SizedBox(
                       width: double.infinity,
                       height: 50.h,
                       child: ElevatedButton(onPressed: () => signupController.signup(), child: const Text("Signup")),
                     ),
+                    TSizes.spaceBtwInputField.verticalSpace,
                   ],
                 ),
               ),

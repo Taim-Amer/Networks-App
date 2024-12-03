@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
-import 'package:networks_app/utils/helpers/helper_functions.dart';
 
 class TRoundedContainer extends StatelessWidget {
-  const TRoundedContainer({
+  TRoundedContainer({
     super.key,
     this.width,
     this.height,
@@ -14,7 +13,7 @@ class TRoundedContainer extends StatelessWidget {
     this.radius = TSizes.cardRadiusLg,
     this.showBorder = false,
     this.borderColor = TColors.borderPrimary,
-    this.backgroundColor = TColors.light,
+    this.backgroundColor = Colors.transparent,
     this.boxShadow,
     this.showShadow = false,
   });
@@ -25,7 +24,7 @@ class TRoundedContainer extends StatelessWidget {
   final Widget? child;
   final bool showBorder;
   final Color borderColor;
-  final Color backgroundColor;
+  Color? backgroundColor;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final List<BoxShadow>? boxShadow;
@@ -33,14 +32,13 @@ class TRoundedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
     return Container(
       width: width,
       height: height,
       padding: padding,
       margin: margin,
       decoration: BoxDecoration(
-        color: dark ? TColors.darkerGrey : backgroundColor,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(radius),
         border: showBorder ? Border.all(color: borderColor) : null,
         boxShadow: showShadow

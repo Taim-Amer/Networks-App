@@ -8,6 +8,14 @@ class TColors {
   static const Color primary = Color(0xff7EE787);
   static const Color accent = Color(0xFFD2A8FF);
 
+  // Scaffold
+  static Color lightScaffold = const Color(0xff6daedb).withOpacity(.3);
+  static const Color darkScaffold = Color(0xFF212332);
+
+  static const primaryColor = Color(0xFF2697FF);
+  static const secondaryDarkColor = Color(0xFF2A2D3E);
+  static const secondaryLightColor = Color(0xFF3572A5);
+
   static const Color redColor = Color(0xFFFF7A7A);
   static const Color greenColor = Color(0xFF33B500);
   static const Color yellowColor = Colors.orange;
