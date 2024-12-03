@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
-import 'package:networks_app/utils/logging/logger.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'dart:typed_data';
 
 class TDioHelper {
   static final TDioHelper _instance = TDioHelper._internal();
@@ -40,33 +38,6 @@ class TDioHelper {
       lang: lang,
       token: token,
     );
-  }
-
-  Future<Map<String, dynamic>> postWithImage(String endPoint, Map<String, dynamic> data, {required Uint8List imageBytes}) async {
-    try {
-      final formData = FormData.fromMap({
-        ...data,
-        'image': MultipartFile.fromBytes(
-          imageBytes,
-          filename: 'image.png',
-        ),
-      });
-
-      final response = await Dio().post(
-        endPoint,
-        data: formData,
-        options: Options(
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            // 'Content-Type': 'application/json',
-          },
-        ),
-      );
-      return response.data;
-    } catch (error) {
-      TLoggerHelper.error(error.toString());
-      rethrow;
-    }
   }
 
   Future<Map<String, dynamic>> put(String endPoint, Map<String, dynamic> data,
@@ -115,7 +86,6 @@ class TDioHelper {
   }
 
   Future<String?> refreshToken() async {
-    print("refreshing token");
     Response response = await dio.post(TApiConstants.refresh,
         options: Options(headers: {
           'Authorization': 'Bearer ${TCacheHelper.getData(key: "token")}'

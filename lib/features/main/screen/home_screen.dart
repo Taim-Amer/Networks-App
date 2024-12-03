@@ -3,7 +3,6 @@ import 'package:networks_app/features/files/screens/widgets/files_table.dart';
 import 'package:networks_app/features/main/screen/widgets/header.dart';
 import 'package:networks_app/responsive.dart';
 import 'package:networks_app/features/groups/screens/widgets/groups_grid.dart';
-import 'package:networks_app/features/main/screen/widgets/recent_files.dart';
 import 'package:networks_app/features/main/screen/widgets/storage_details.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
 

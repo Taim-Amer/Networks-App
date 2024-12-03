@@ -54,8 +54,12 @@ dependencies:
   pretty_dio_logger: ^1.4.0
 
   # Pickers
-  image_picker: ^1.1.2
   fl_chart: ^0.69.2
+
+  # Files
+  image_picker: ^1.1.2
+  file_picker: ^8.1.4
+
 
 
 #----------------- ./ PACKAGES END -----------------#

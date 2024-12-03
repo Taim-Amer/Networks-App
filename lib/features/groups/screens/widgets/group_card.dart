@@ -9,60 +9,67 @@ import 'package:networks_app/utils/helpers/helper_functions.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
 
 class GroupCard extends StatelessWidget {
-  const GroupCard({
-    super.key,
-    required this.name, required this.groupID, required this.isOwner,
-  });
+  const GroupCard({super.key, required this.name, required this.groupID, required this.isOwne});
 
   final String name;
   final int groupID;
   final bool isOwner;
+  // final ValueNotifier<int?> selectedGroupIDNotifier;
 
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    return GestureDetector(
-      onTap: () => GroupController.instance.getUsersInGroup(groupID: groupID).then((value) => TCacheHelper.saveData(key: 'group_id', value: groupID)),
-      child: TRoundedContainer(
-        backgroundColor: dark ? TColors.secondaryDarkColor : TColors.secondaryLightColor,
-        padding: const EdgeInsets.all(TSizes.defaultSpace),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+    final ValueNotifier<int?> selectedGroupIDNotifier = ValueNotifier<int?>(null);
+    return ValueListenableBuilder(
+      valueListenable: selectedGroupIDNotifier,
+      builder: (context, selectedGroupID, _){
+        final isSelected = selectedGroupID == groupID;
+        return  GestureDetector(
+          onTap: () => GroupController.instance.getUsersInGroup(groupID: groupID).then((value) => TCacheHelper.saveData(key: 'group_id', value: groupID)),
+          child: TRoundedContainer(
+            showBorder: isSelected,
+            borderColor: TColors.lightGrey,
+            backgroundColor: dark ? TColors.secondaryDarkColor : TColors.secondaryLightColor,
+            padding: const EdgeInsets.all(TSizes.defaultSpace),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TRoundedContainer(
-                  height: 40,
-                  width: 40,
-                  backgroundColor: TColors.secondary.withOpacity(.1),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset("assets/icons/group-svgrepo-com.svg", colorFilter: const ColorFilter.mode(TColors.secondary, BlendMode.srcIn)),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TRoundedContainer(
+                      height: 40,
+                      width: 40,
+                      backgroundColor: TColors.secondary.withOpacity(.1),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SvgPicture.asset("assets/icons/group-svgrepo-com.svg", colorFilter: const ColorFilter.mode(TColors.secondary, BlendMode.srcIn)),
+                      ),
+                    ),
+                    TRoundedContainer(
+                      backgroundColor: isOwner ? TColors.primary : TColors.redColor,
+                      child: Center(child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text(isOwner ? 'Owner' : 'Member', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500, fontSize: 12)),
+                      )),
+                    )
+                  ],
                 ),
-                TRoundedContainer(
-                  backgroundColor: isOwner ? TColors.primary : TColors.redColor,
-                  child: Center(child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Text(isOwner ? 'Owner' : 'Member', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500, fontSize: 12)),
-                  )),
+                Text(name, maxLines: 1, overflow: TextOverflow.ellipsis),
+                const ProgressLine(color: TColors.secondary, percentage: 75),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("133 Members", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white70)),
+                    Text("1GB Files", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white)),
+                  ],
                 )
               ],
             ),
-            Text(name, maxLines: 1, overflow: TextOverflow.ellipsis),
-            const ProgressLine(color: TColors.secondary, percentage: 75),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("133 Members", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white70)),
-                Text("1GB Files", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white)),
-              ],
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

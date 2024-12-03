@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:networks_app/features/files/controllers/file_controller.dart';
 import 'package:networks_app/features/files/screens/widgets/file_row.dart';
-import 'package:networks_app/features/main/models/recent_file.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
