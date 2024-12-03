@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:networks_app/features/groups/controllers/group_controller.dart';
+import 'package:networks_app/features/groups/screens/widgets/groups_grid.dart';
 import 'package:networks_app/features/main/screen/widgets/progress_line.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
@@ -9,26 +10,27 @@ import 'package:networks_app/utils/helpers/helper_functions.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
 
 class GroupCard extends StatelessWidget {
-  const GroupCard({super.key, required this.name, required this.groupID, required this.isOwne});
+  const GroupCard({super.key, required this.name, required this.groupID, required this.isOwner});
 
   final String name;
   final int groupID;
   final bool isOwner;
-  // final ValueNotifier<int?> selectedGroupIDNotifier;
 
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    final ValueNotifier<int?> selectedGroupIDNotifier = ValueNotifier<int?>(null);
     return ValueListenableBuilder(
-      valueListenable: selectedGroupIDNotifier,
+      valueListenable: GroupGrid.selectedGroupIDNotifier,
       builder: (context, selectedGroupID, _){
         final isSelected = selectedGroupID == groupID;
         return  GestureDetector(
-          onTap: () => GroupController.instance.getUsersInGroup(groupID: groupID).then((value) => TCacheHelper.saveData(key: 'group_id', value: groupID)),
+          onTap: (){
+            GroupGrid.selectedGroupIDNotifier.value = groupID;
+            GroupController.instance.getUsersInGroup(groupID: groupID).then((value) => TCacheHelper.saveData(key: 'group_id', value: groupID));
+          },
           child: TRoundedContainer(
             showBorder: isSelected,
-            borderColor: TColors.lightGrey,
+            borderColor: isSelected ? TColors.primary : Colors.transparent,
             backgroundColor: dark ? TColors.secondaryDarkColor : TColors.secondaryLightColor,
             padding: const EdgeInsets.all(TSizes.defaultSpace),
             child: Column(

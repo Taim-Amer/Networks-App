@@ -71,6 +71,7 @@ class GroupGrid extends StatelessWidget {
 
   final int crossAxisCount;
   final double childAspectRatio;
+  static final ValueNotifier<int?> selectedGroupIDNotifier = ValueNotifier<int?>(null);
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,6 @@ class GroupGrid extends StatelessWidget {
           isOwner: group?.isOwner ?? false,
           name: group?.name ?? '',
           groupID: group?.id ?? 1,
-          selectedGroupIDNotifier: null,
         );
       },
     );
