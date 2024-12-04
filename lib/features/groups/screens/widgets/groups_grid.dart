@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:networks_app/features/files/controllers/file_controller.dart';
 import 'package:networks_app/features/groups/controllers/group_controller.dart';
 import 'package:networks_app/features/groups/screens/widgets/create_group_dialog.dart';
 import 'package:networks_app/features/groups/screens/widgets/group_card.dart';
 import 'package:networks_app/responsive.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
-import 'package:networks_app/utils/services/files.dart';
 
 class MyGroups extends StatelessWidget {
   const MyGroups({super.key});
@@ -32,17 +32,20 @@ class MyGroups extends StatelessWidget {
               label: const Text("Group"),
             ),
             TSizes.md.horizontalSpace,
-            ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: TSizes.defaultSpace * 1.5,
-                  vertical:
-                  TSizes.defaultSpace / (Responsive.isMobile(context) ? 2 : 1),
+            ValueListenableBuilder(
+              valueListenable: GroupGrid.selectedGroupIDNotifier,
+              builder: (context, isSelected, _) => isSelected != null ? ElevatedButton.icon(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: TSizes.defaultSpace * 1.5,
+                    vertical:
+                    TSizes.defaultSpace / (Responsive.isMobile(context) ? 2 : 1),
+                  ),
                 ),
-              ),
-              onPressed: () => TFileServices.pickFile(),
-              icon: const Icon(Icons.add),
-              label: const Text("File"),
+                onPressed: () => FileController.instance.addFile(null, isFree: 1),
+                icon: const Icon(Icons.add),
+                label: const Text("File"),
+              ) : const SizedBox(),
             ),
           ],
         ),

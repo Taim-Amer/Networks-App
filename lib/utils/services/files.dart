@@ -25,7 +25,7 @@ class TFileServices{
         // هون منرفرش
         fileName=name;
         isFilePicked=true;
-      }else{
+      }else if(TDeviceUtils.isWeb()){
         PlatformFile file = pickedFile.files.first;
         fileBytes=file.bytes!;
         print('Name: ${file.name}\nSize: ${file.size}');
