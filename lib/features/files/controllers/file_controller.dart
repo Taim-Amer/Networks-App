@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:networks_app/common/widgets/alerts/snackbar.dart';
 import 'package:networks_app/features/files/models/add_file_model.dart';
 import 'package:networks_app/features/files/repositories/file_repo_impl.dart';
-import 'package:networks_app/features/groups/models/file_model.dart';
+import 'package:networks_app/features/files/models/file_model.dart';
 import 'package:networks_app/localization/keys.dart';
 import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/services/files.dart';

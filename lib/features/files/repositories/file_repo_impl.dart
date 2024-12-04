@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:networks_app/features/files/models/add_file_model.dart';
+import 'package:networks_app/features/files/models/check_in_file_model.dart';
+import 'package:networks_app/features/files/models/delete_file_model.dart';
+import 'package:networks_app/features/files/models/edit_file_model.dart';
 import 'package:networks_app/features/files/repositories/file_repo.dart';
-import 'package:networks_app/features/groups/models/file_model.dart';
+import 'package:networks_app/features/files/models/file_model.dart';
 import 'package:networks_app/utils/api/dio_helper.dart';
 import 'package:networks_app/utils/api/multimedia_helper.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
@@ -41,5 +44,29 @@ class FileRepoImpl extends FileRepo{
       TLoggerHelper.error("Error uploading file: $error");
       rethrow;
     }
+  }
+
+  @override
+  Future<CheckInFileModel> checkInFile(List<int> fileIDs) {
+    // TODO: implement checkInFile
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DeleteFileModel> deleteFile(int fileID) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.delete(TApiConstants.deleteFiles, token: token)
+  }
+
+  @override
+  Future<void> downloadFile(int fileID) {
+    // TODO: implement downloadFile
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<EditFileModel> editFile(String fileName, String filePath, int groupID) {
+    // TODO: implement editFile
+    throw UnimplementedError();
   }
 }

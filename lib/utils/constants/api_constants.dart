@@ -13,4 +13,8 @@ class TApiConstants {
   static const String addUser = "group_invitation/create";
   static const String getFiles = "file/get";
   static const String addFiles = "file/add";
+  static const String checkInFiles = "file/check_in";
+  static const String editFiles = "file/edit";
+  static const String deleteFiles = "file/destroy";
+  static const String downloadFiles = "file/download";
 }
