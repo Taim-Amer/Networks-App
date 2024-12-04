@@ -11,9 +11,11 @@ class TColors {
   // Scaffold
   static Color lightScaffold = const Color(0xff6daedb).withOpacity(.3);
   static const Color darkScaffold = Color(0xFF212332);
+  // static const Color darkScaffold = Color(0xFF161B22);
 
   static const primaryColor = Color(0xFF2697FF);
   static const secondaryDarkColor = Color(0xFF2A2D3E);
+  // static const secondaryDarkColor = Color(0xFF30363D);
   static const secondaryLightColor = Color(0xFF3572A5);
 
   static const Color redColor = Color(0xFFFF7A7A);
@@ -35,7 +37,7 @@ class TColors {
   static Color darkContainer = TColors.white.withOpacity(.1);
 
   // Button Colors
-  static const Color buttonPrimary = Color(0xFF008DFF);
+  static const Color buttonPrimary = Color(0xFF292a73);
 
   static const Color buttonSecondary = Color(0xFF3572A5);
   static const Color buttonDisabled = Color(0xFFC4C4C4);

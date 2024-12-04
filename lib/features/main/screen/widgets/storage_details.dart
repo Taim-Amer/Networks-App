@@ -21,26 +21,23 @@ class StorageDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: 60),
-      child: TRoundedContainer(
-        backgroundColor: dark ? TColors.secondaryDarkColor : TColors.secondaryLightColor,
-        padding: const EdgeInsets.all(TSizes.defaultSpace),
-        height: 755.h,
-        radius: 10.r,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Chart(),
-            Obx((){
-              Widget current;
-              GroupController.instance.usersInGroupModel.value.response?.isEmpty ?? true ? current = const StorageInfoList() :
-              GroupController.instance.getUsersInGroupState.value == RequestState.loading ?
-              current = const Expanded(child: Center(child: LoadingWidget())) : current = const UsersList();
-              return current;
-            })
-          ],
-        ),
+    return TRoundedContainer(
+      backgroundColor: dark ? TColors.secondaryDarkColor : TColors.secondaryLightColor,
+      padding: const EdgeInsets.all(TSizes.defaultSpace),
+      height: 755.h,
+      radius: 10.r,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Chart(),
+          Obx((){
+            Widget current;
+            GroupController.instance.usersInGroupModel.value.response?.isEmpty ?? true ? current = const StorageInfoList() :
+            GroupController.instance.getUsersInGroupState.value == RequestState.loading ?
+            current = const Expanded(child: Center(child: LoadingWidget())) : current = const UsersList();
+            return current;
+          })
+        ],
       ),
     );
   }

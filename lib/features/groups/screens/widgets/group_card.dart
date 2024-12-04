@@ -52,7 +52,7 @@ class GroupCard extends StatelessWidget {
                     TRoundedContainer(
                       backgroundColor: isOwner ? TColors.primary : TColors.redColor,
                       child: Center(child: Padding(
-                        padding: const EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: Text(isOwner ? 'Owner' : 'Member', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500, fontSize: 12)),
                       )),
                     )

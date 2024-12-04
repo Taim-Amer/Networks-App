@@ -6,7 +6,7 @@ class TTextButtonTheme {
 
   static final lightTextButtonTheme = TextButtonThemeData(
     style: TextButton.styleFrom(
-      foregroundColor: TColors.buttonSecondary,
+      foregroundColor: TColors.primary,
       backgroundColor: Colors.transparent,
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       shape: RoundedRectangleBorder(
@@ -19,7 +19,7 @@ class TTextButtonTheme {
 
   static final darkTextButtonTheme = TextButtonThemeData(
     style: TextButton.styleFrom(
-      foregroundColor: TColors.buttonSecondary,
+      foregroundColor: TColors.primary,
       backgroundColor: Colors.transparent,
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       shape: RoundedRectangleBorder(

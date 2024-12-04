@@ -25,8 +25,10 @@ class TMultiMediaHelper{
     required List<int> fileBytes,
     required String fileName,
     required String endPoint,
+    required String token,
   }) async {
     try {
+      dio.options.headers['Authorization'] = 'Bearer $token';
       FormData formData = _createFormData(data, fileBytes, fileName);
 
       Response response = await dio.post(endPoint, data: formData);
@@ -44,7 +46,7 @@ class TMultiMediaHelper{
     );
     return FormData.fromMap({
       "data": data,
-      "image": multipartFile,
+      "file": multipartFile,
     });
   }
 

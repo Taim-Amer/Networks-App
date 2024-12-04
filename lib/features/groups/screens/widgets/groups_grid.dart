@@ -29,7 +29,7 @@ class MyGroups extends StatelessWidget {
               ),
               onPressed: () => showCreateGroupDialog(context),
               icon: const Icon(Icons.add),
-              label: const Text("Create Group"),
+              label: const Text("Group"),
             ),
             TSizes.md.horizontalSpace,
             ElevatedButton.icon(
@@ -42,7 +42,7 @@ class MyGroups extends StatelessWidget {
               ),
               onPressed: () => TFileServices.pickFile(),
               icon: const Icon(Icons.add),
-              label: const Text("Add File"),
+              label: const Text("File"),
             ),
           ],
         ),
