@@ -107,7 +107,6 @@ class GroupController extends GetxController {
         updateGetUserInGroupStatus(RequestState.error);
       }
     } catch (error) {
-      TLoggerHelper.warning(error.toString());
       updateGetUserInGroupStatus(RequestState.error);
     }
   }

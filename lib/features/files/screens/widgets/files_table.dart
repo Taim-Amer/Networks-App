@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:networks_app/common/widgets/loaders/loading_widget.dart';
 import 'package:networks_app/features/files/controllers/file_controller.dart';
+import 'package:networks_app/features/files/models/file_model.dart';
 import 'package:networks_app/features/files/screens/widgets/file_row.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
+import 'package:networks_app/utils/formatters/formatter.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
 
 
@@ -19,7 +21,7 @@ class FilesTable extends StatelessWidget {
 
     return Obx(() {
       final apiStatus = FileController.instance.getFilesApiStatus.value;
-      final files = FileController.instance.fileModel.value.response;
+      final files = FileController.instance.fileModel.value;
 
       return TRoundedContainer(
         height: 350,
@@ -32,13 +34,13 @@ class FilesTable extends StatelessWidget {
     });
   }
 
-  Widget _buildContent(RequestState status, List<dynamic>? files, BuildContext context) {
+  Widget _buildContent(RequestState status, FileModel files, BuildContext context) {
     switch (status) {
       case RequestState.loading:
         return const Center(child: LoadingWidget());
 
       case RequestState.success:
-        if (files == null || files.isEmpty) {
+        if (files.response!.isEmpty) {
           return const Center(
             child: Text('No Data Available'),
           );
@@ -66,7 +68,7 @@ class FilesTable extends StatelessWidget {
     }
   }
 
-  Widget _buildDataTable(List<dynamic> files, BuildContext context) {
+  Widget _buildDataTable(FileModel files, BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,14 +93,18 @@ class FilesTable extends StatelessWidget {
                 ),
                 DataColumn(
                   label: Text(
-                    "Size",
+                    "Access",
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
               ],
               rows: List.generate(
-                files.length,
-                    (index) => FileRow(fileName: files[index].name!),
+                files.response!.length,
+                (index) => FileRow(
+                  fileName: files.response?[index].name ?? "",
+                  isFree: files.response?[index].isFree == 1 ? "Free" : "Checked in" ?? "",
+                  updatedDate: files.response?[index].updatedAt ?? ""
+                ),
               ),
             ),
           ),

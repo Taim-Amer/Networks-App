@@ -50,9 +50,13 @@ class FileRepoImpl extends FileRepo{
   }
 
   @override
-  Future<CheckInFileModel> checkInFile(List<int> fileIDs) {
-    // TODO: implement checkInFile
-    throw UnimplementedError();
+  Future<CheckInFileModel> checkInFile(List<int> fileIDs) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.post(
+        TApiConstants.checkInFiles,
+        token: token,
+        data: {"ids" : fileIDs}
+    ).then((response) => CheckInFileModel.fromJson(response));
   }
 
   // @override

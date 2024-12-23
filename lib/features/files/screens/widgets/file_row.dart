@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
 
 
-DataRow FileRow({required String fileName}) {
+DataRow FileRow({required String fileName, required String updatedDate, required String isFree}) {
   return DataRow(
     cells: [
       DataCell(
@@ -24,8 +24,8 @@ DataRow FileRow({required String fileName}) {
           ],
         ),
       ),
-      DataCell(Text("27-02-2024",style: Theme.of(Get.context!).textTheme.bodyMedium)),
-      DataCell(Text("19.0mb",style: Theme.of(Get.context!).textTheme.bodyMedium)),
+      DataCell(Text(updatedDate,style: Theme.of(Get.context!).textTheme.bodyMedium)),
+      DataCell(Text(isFree,style: Theme.of(Get.context!).textTheme.bodyMedium)),
     ],
   );
 }
