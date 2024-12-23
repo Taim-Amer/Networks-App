@@ -28,10 +28,13 @@ class FileController extends GetxController{
     addFileApiStatus.value = value;
   }
 
-  Future<void> getFiles() async{
+  Future<void> getFiles({required groupID}) async{
     updateGetFilesStatus(RequestState.loading);
-    fileModel.value = await FileRepoImpl.instance.getFiles();
+    fileModel.value = await FileRepoImpl.instance.getFiles(groupID: groupID);
     if(fileModel.value.status == true){
+      if(fileModel.value.response!.isEmpty){
+        updateGetFilesStatus(RequestState.noData);
+      }
       updateGetFilesStatus(RequestState.success);
     } else{
       updateGetFilesStatus(RequestState.error);
@@ -42,10 +45,6 @@ class FileController extends GetxController{
     updateAddFilesStatus(RequestState.loading);
     try{
       await TFileServices.pickFile();
-      print(TFileServices.fileName);
-      print(TFileServices.path);
-      print(isFree);
-      print(TCacheHelper.getData(key: 'group_id'));
       addFileModel.value = await FileRepoImpl.instance.addFile(TFileServices.fileName, TFileServices.path, isFree, userID ?? 0);
 
       if(addFileModel.value.status == true){

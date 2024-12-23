@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:networks_app/features/files/controllers/file_controller.dart';
 import 'package:networks_app/features/groups/controllers/group_controller.dart';
 import 'package:networks_app/features/groups/screens/widgets/groups_grid.dart';
 import 'package:networks_app/features/main/screen/widgets/progress_line.dart';
@@ -26,6 +27,7 @@ class GroupCard extends StatelessWidget {
         return  GestureDetector(
           onTap: (){
             GroupGrid.selectedGroupIDNotifier.value = groupID;
+            FileController.instance.getFiles(groupID: groupID);
             GroupController.instance.getUsersInGroup(groupID: groupID).then((value) => TCacheHelper.saveData(key: 'group_id', value: groupID));
           },
           child: TRoundedContainer(

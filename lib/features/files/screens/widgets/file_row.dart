@@ -13,7 +13,7 @@ DataRow FileRow({required String fileName}) {
         Row(
           children: [
             SvgPicture.asset(
-              "assets/icons/Figma_file.svg",
+              "assets/icons/doc_file.svg",
               height: 30,
               width: 30,
             ),

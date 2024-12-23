@@ -13,7 +13,7 @@ class HomeController extends GetxController{
   @override
   void onReady() {
     GroupController.instance.getGroups();
-    FileController.instance.getFiles();
+    // FileController.instance.getFiles();
     super.onReady();
   }
 }

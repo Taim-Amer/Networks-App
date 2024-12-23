@@ -18,10 +18,13 @@ class FileRepoImpl extends FileRepo{
   final token = TCacheHelper.getData(key: 'token');
 
   @override
-  Future<FileModel> getFiles() async{
+  Future<FileModel> getFiles({required int groupID}) async{
     final dioHelper = TDioHelper();
-    return await dioHelper.get(TApiConstants.getFiles, token: token)
-        .then((response) => FileModel.fromJson(response));
+    return await dioHelper.get(
+      TApiConstants.getFiles,
+      token: token,
+      queryParameters: {"group_id" : groupID}
+    ).then((response) => FileModel.fromJson(response));
   }
 
   @override
@@ -52,11 +55,11 @@ class FileRepoImpl extends FileRepo{
     throw UnimplementedError();
   }
 
-  @override
-  Future<DeleteFileModel> deleteFile(int fileID) async{
-    final dioHelper = TDioHelper();
-    return await dioHelper.delete(TApiConstants.deleteFiles, token: token)
-  }
+  // @override
+  // Future<DeleteFileModel> deleteFile(int fileID) async{
+  //   final dioHelper = TDioHelper();
+  //   return await dioHelper.delete(TApiConstants.deleteFiles, token: token)
+  // }
 
   @override
   Future<void> downloadFile(int fileID) {
