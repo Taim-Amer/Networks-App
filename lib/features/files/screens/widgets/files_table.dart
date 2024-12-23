@@ -24,7 +24,7 @@ class FilesTable extends StatelessWidget {
       final files = FileController.instance.fileModel.value;
 
       return TRoundedContainer(
-        height: 350,
+        height: 360,
         width: double.infinity,
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         backgroundColor:
@@ -97,13 +97,20 @@ class FilesTable extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
+                const DataColumn(
+                  label: Text(""),
+                ),
+                const DataColumn(
+                  label: Text(""),
+                ),
               ],
               rows: List.generate(
                 files.response!.length,
                 (index) => FileRow(
                   fileName: files.response?[index].name ?? "",
                   isFree: files.response?[index].isFree == 1 ? "Free" : "Checked in" ?? "",
-                  updatedDate: files.response?[index].updatedAt ?? ""
+                  updatedDate: files.response?[index].updatedAt ?? "",
+                  fileID: files.response?[index].id ?? 1
                 ),
               ),
             ),

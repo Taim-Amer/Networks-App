@@ -24,7 +24,7 @@ class StorageDetails extends StatelessWidget {
     return TRoundedContainer(
       backgroundColor: dark ? TColors.secondaryDarkColor : TColors.secondaryLightColor,
       padding: const EdgeInsets.all(TSizes.defaultSpace),
-      height: 830.h,
+      height: 835.h,
       radius: 10.r,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

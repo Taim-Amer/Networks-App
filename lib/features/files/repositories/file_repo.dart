@@ -8,7 +8,7 @@ abstract class FileRepo{
   Future<FileModel> getFiles({required int groupID});
   Future<AddFileModel> addFile(String fileName, String filePath, int isFree, int userID);
   // Future<DeleteFileModel> deleteFile(int fileID);
-  Future<void> downloadFile(int fileID);
+  Future<void> downloadFile({required int fileID});
   Future<CheckInFileModel> checkInFile(List<int> fileIDs);
   Future<EditFileModel> editFile(String fileName, String filePath, int groupID);
 }

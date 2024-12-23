@@ -11,6 +11,7 @@ import 'package:networks_app/utils/api/multimedia_helper.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
 import 'package:networks_app/utils/logging/logger.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
+import 'package:path_provider/path_provider.dart';
 
 class FileRepoImpl extends FileRepo{
   static FileRepoImpl get instance => Get.find();
@@ -66,9 +67,34 @@ class FileRepoImpl extends FileRepo{
   // }
 
   @override
-  Future<void> downloadFile(int fileID) {
-    // TODO: implement downloadFile
-    throw UnimplementedError();
+  Future<void> downloadFile({required int fileID}) async{
+    final dioHelper = TDioHelper();
+    try {
+      final downloadUrl = '${TApiConstants.baseUrl}/file/download?file_id=$fileID';
+
+      // الحصول على استجابة الملف
+      final response = await dioHelper.download(
+        downloadUrl,
+        token: token,
+      );
+
+      if (response != null) {
+        // تحديد مسار الحفظ
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/downloaded_file_$fileID';
+
+        // حفظ الملف
+        final file = File(filePath);
+        await file.writeAsBytes(response);
+
+        TLoggerHelper.info("File downloaded successfully to $filePath");
+      } else {
+        TLoggerHelper.error("Failed to download file");
+      }
+    } catch (e) {
+      TLoggerHelper.error("Error downloading file: $e");
+      rethrow;
+    }
   }
 
   @override

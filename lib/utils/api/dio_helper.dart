@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class TDioHelper {
@@ -56,6 +59,32 @@ class TDioHelper {
       lang: lang,
       token: token,
     );
+  }
+
+  Future<List<int>?> download(String url, {String? token}) async {
+    final tempDir = await getTemporaryDirectory();  // الحصول على مسار التخزين المؤقت
+    final filePath = '${tempDir.path}/downloaded_file';  // تحديد اسم ومسار الملف الذي سيتم حفظه
+
+    try {
+      // طلب تنزيل الملف
+      Response response = await dio.download(
+        url,
+        filePath,
+        options: Options(
+          headers: {
+            'Authorization': token != null ? 'Bearer $token' : '',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return File(filePath).readAsBytes();  // إرجاع البيانات المقروءة من الملف
+      } else {
+        throw Exception('Failed to download file: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Download failed: $e');
+    }
   }
 
   Future<Map<String, dynamic>> _makeRequest(Future<Response> Function() request,
