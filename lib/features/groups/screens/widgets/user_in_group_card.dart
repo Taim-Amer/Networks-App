@@ -34,6 +34,11 @@ class UserInGroupCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
+                    userID.toString(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
                     email,
                     style: Theme.of(context)
                         .textTheme

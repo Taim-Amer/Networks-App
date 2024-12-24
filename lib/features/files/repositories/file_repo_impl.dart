@@ -1,8 +1,8 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:networks_app/features/files/models/add_file_model.dart';
 import 'package:networks_app/features/files/models/check_in_file_model.dart';
-import 'package:networks_app/features/files/models/delete_file_model.dart';
 import 'package:networks_app/features/files/models/edit_file_model.dart';
 import 'package:networks_app/features/files/repositories/file_repo.dart';
 import 'package:networks_app/features/files/models/file_model.dart';
@@ -11,7 +11,6 @@ import 'package:networks_app/utils/api/multimedia_helper.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
 import 'package:networks_app/utils/logging/logger.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
-import 'package:path_provider/path_provider.dart';
 
 class FileRepoImpl extends FileRepo{
   static FileRepoImpl get instance => Get.find();
@@ -29,23 +28,30 @@ class FileRepoImpl extends FileRepo{
   }
 
   @override
-  Future<AddFileModel> addFile(String fileName, String filePath, int isFree, int userID) async {
+  Future<AddFileModel> addFile(File file, int groupID, int isFree, int userID) async {
     try {
-      List<int> fileBytes = await File(filePath).readAsBytes();
-      final multiMediaHelper = TMultiMediaHelper();
-      return await multiMediaHelper.uploadFile(
-        token: token,
-        data: {
-          'group_id': TCacheHelper.getData(key: 'group_id'),
-          'isFree': isFree,
-          'user_id': userID,
-        },
+      String token = TCacheHelper.getData(key: 'token');
+      String fileName = file.uri.pathSegments.last;
+
+      List<int> fileBytes = await file.readAsBytes();
+
+      Map<String, dynamic> data = {
+        "isFree": isFree,
+        "user_id": userID,
+        "group_id": groupID,
+      };
+
+      Map<String, dynamic> response = await TMultiMediaHelper().uploadFile(
+        data: data,
         fileBytes: fileBytes,
         fileName: fileName,
         endPoint: TApiConstants.addFiles,
-      ).then((response) => AddFileModel.fromJson(response));
-    } catch (error) {
-      TLoggerHelper.error("Error uploading file: $error");
+        token: token,
+      );
+
+      return AddFileModel.fromJson(response);
+    } catch (e) {
+      TLoggerHelper.error("Error in addFile: $e");
       rethrow;
     }
   }
@@ -60,37 +66,18 @@ class FileRepoImpl extends FileRepo{
     ).then((response) => CheckInFileModel.fromJson(response));
   }
 
-  // @override
-  // Future<DeleteFileModel> deleteFile(int fileID) async{
-  //   final dioHelper = TDioHelper();
-  //   return await dioHelper.delete(TApiConstants.deleteFiles, token: token)
-  // }
-
   @override
   Future<void> downloadFile({required int fileID}) async{
     final dioHelper = TDioHelper();
     try {
-      final downloadUrl = '${TApiConstants.baseUrl}/file/download?file_id=$fileID';
-
-      // الحصول على استجابة الملف
-      final response = await dioHelper.download(
-        downloadUrl,
-        token: token,
+      await dioHelper.download(
+        endPoint: TApiConstants.downloadFiles,
+        fileName: 'downloaded_file_$fileID',
+        savePath: 'C:\\Users\\taim\\StudioProjects\\networks_app\\lib\\utils\\downloaded',
+        data: {
+          "file_id" : fileID
+        }
       );
-
-      if (response != null) {
-        // تحديد مسار الحفظ
-        final directory = await getApplicationDocumentsDirectory();
-        final filePath = '${directory.path}/downloaded_file_$fileID';
-
-        // حفظ الملف
-        final file = File(filePath);
-        await file.writeAsBytes(response);
-
-        TLoggerHelper.info("File downloaded successfully to $filePath");
-      } else {
-        TLoggerHelper.error("Failed to download file");
-      }
     } catch (e) {
       TLoggerHelper.error("Error downloading file: $e");
       rethrow;

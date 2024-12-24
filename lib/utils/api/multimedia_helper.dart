@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:networks_app/utils/constants/api_constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-class TMultiMediaHelper{
+class TMultiMediaHelper {
   static final TMultiMediaHelper _instance = TMultiMediaHelper._internal();
   late Dio dio;
 
@@ -28,14 +28,27 @@ class TMultiMediaHelper{
     required String token,
   }) async {
     try {
-      dio.options.headers['Authorization'] = 'Bearer $token';
+      dio.options.headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'multipart/form-data',
+      };
+
       FormData formData = _createFormData(data, fileBytes, fileName);
 
       Response response = await dio.post(endPoint, data: formData);
 
       return _handleResponse(response);
     } catch (error) {
-      rethrow;
+      if (error is DioError) {
+        if (error.response != null) {
+          throw Exception(
+              "DioError: ${error.response?.statusCode} - ${error.response?.data}");
+        } else {
+          throw Exception("DioError: ${error.message}");
+        }
+      } else {
+        rethrow;
+      }
     }
   }
 
@@ -45,7 +58,7 @@ class TMultiMediaHelper{
       filename: fileName,
     );
     return FormData.fromMap({
-      "data": data,
+      ...data,
       "file": multipartFile,
     });
   }
