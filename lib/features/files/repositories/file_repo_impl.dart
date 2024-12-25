@@ -99,20 +99,35 @@ class FileRepoImpl extends FileRepo{
   }
 
   @override
-  Future<FileRequestModel> fileResponse({required int id, required int response}) {
-    // TODO: implement fileResponse
-    throw UnimplementedError();
+  Future<FileRequestModel> fileResponse({required int id, required int response}) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.post(
+      TApiConstants.fileResponse,
+      data: {
+        "add_file_request_id" : id,
+        "response" : response,
+      },
+      token: token,
+    ).then((response) => FileRequestModel.fromJson(response));
   }
 
   @override
-  Future<GetFileRequestsModel> getFileRequests({required int groupID}) {
-    // TODO: implement getFileRequests
-    throw UnimplementedError();
+  Future<GetFileRequestsModel> getFileRequests({required int groupID}) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.get(
+      TApiConstants.getFileRequest,
+      queryParameters: {"group_id" : groupID},
+      token: token,
+    ).then((response) => GetFileRequestsModel.fromJson(response));
   }
 
   @override
-  Future<FileVersionsModel> getFileVersions({required int fileID}) {
-    // TODO: implement getFileVersions
-    throw UnimplementedError();
+  Future<FileVersionsModel> getFileVersions({required int fileID}) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.get(
+      TApiConstants.getFileVersions,
+      queryParameters: {"file_id" : fileID},
+      token: token,
+    ).then((response) => FileVersionsModel.fromJson(response));
   }
 }

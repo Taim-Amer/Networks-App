@@ -22,4 +22,5 @@ class TApiConstants {
   static const String fileResponse = "add_file_request/response";
   static const String getFileOperations = "file_operation/get_file_operations";
   static const String getUserOperations = "file_operation/get_user_operations";
+  static const String getFileVersions = "file/get_file_versions";
 }
