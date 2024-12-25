@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:networks_app/features/groups/models/create_group_model.dart';
+import 'package:networks_app/features/groups/models/get_group_invitation_model.dart';
 import 'package:networks_app/features/groups/models/group_invitation_model.dart';
 import 'package:networks_app/features/groups/models/group_model.dart';
+import 'package:networks_app/features/groups/models/invitation_response_model.dart';
 import 'package:networks_app/features/groups/models/users_in_group_model.dart';
 import 'package:networks_app/features/groups/models/users_out_group_model.dart';
 import 'package:networks_app/features/groups/repositories/group_repo.dart';
@@ -57,5 +59,17 @@ class GroupRepoImpl implements GroupRepo {
       TApiConstants.usersInGroup,
       token: token,
       queryParameters: {"group_id": groupID}).then((response) => UsersInGroupModel.fromJson(response));
+  }
+
+  @override
+  Future<GetGroupInvitationModel> getGroupInvitation() {
+    // TODO: implement getGroupInvitation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<InvitationResponseModel> invitationResponse({required int groupID, required int response}) {
+    // TODO: implement invitationResponse
+    throw UnimplementedError();
   }
 }

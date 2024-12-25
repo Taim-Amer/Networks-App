@@ -1,9 +1,11 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:networks_app/features/files/models/add_file_model.dart';
 import 'package:networks_app/features/files/models/check_in_file_model.dart';
 import 'package:networks_app/features/files/models/edit_file_model.dart';
+import 'package:networks_app/features/files/models/file_request_model.dart';
+import 'package:networks_app/features/files/models/file_versions_model.dart';
+import 'package:networks_app/features/files/models/get_file_requests_model.dart';
 import 'package:networks_app/features/files/repositories/file_repo.dart';
 import 'package:networks_app/features/files/models/file_model.dart';
 import 'package:networks_app/utils/api/dio_helper.dart';
@@ -87,6 +89,30 @@ class FileRepoImpl extends FileRepo{
   @override
   Future<EditFileModel> editFile(String fileName, String filePath, int groupID) {
     // TODO: implement editFile
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> downloadVersion({required int fileID, required int versionNumber}) {
+    // TODO: implement downloadVersion
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<FileRequestModel> fileResponse({required int id, required int response}) {
+    // TODO: implement fileResponse
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<GetFileRequestsModel> getFileRequests({required int groupID}) {
+    // TODO: implement getFileRequests
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<FileVersionsModel> getFileVersions({required int fileID}) {
+    // TODO: implement getFileVersions
     throw UnimplementedError();
   }
 }

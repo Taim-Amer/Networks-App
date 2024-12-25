@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:networks_app/common/widgets/alerts/snackbar.dart';
 import 'package:networks_app/features/files/models/add_file_model.dart';
@@ -7,7 +6,6 @@ import 'package:networks_app/features/files/models/check_in_file_model.dart';
 import 'package:networks_app/features/files/repositories/file_repo_impl.dart';
 import 'package:networks_app/features/files/models/file_model.dart';
 import 'package:networks_app/localization/keys.dart';
-import 'package:networks_app/utils/api/multimedia_helper.dart';
 import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/services/files.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';
@@ -21,9 +19,6 @@ class FileController extends GetxController{
   final Rx<FileModel> fileModel = FileModel().obs;
   final Rx<AddFileModel> addFileModel = AddFileModel().obs;
   final Rx<CheckInFileModel> checkInModel = CheckInFileModel().obs;
-
-  // var name = TFileServices.fileName;
-  // var path = TFileServices.path;
 
   void updateGetFilesStatus(RequestState value) {
     getFilesApiStatus.value = value;
@@ -50,7 +45,6 @@ class FileController extends GetxController{
     updateAddFilesStatus(RequestState.loading);
     try{
       await TFileServices.pickFile();
-
       if (TFileServices.isFilePicked) {
         File file = File(TFileServices.path);
         final response = await FileRepoImpl.instance.addFile(
