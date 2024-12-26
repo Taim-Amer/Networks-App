@@ -25,6 +25,7 @@ class FileRequestsList extends StatelessWidget {
             fileName: fileRequest.name ?? "",
             destinationUser: fileRequest.toUserName ?? "",
             isFree: fileRequest.isFree == 1,
+            fileID: fileRequest.id!,
           );
         },
       ),

@@ -24,6 +24,7 @@ class FileController extends GetxController{
   final Rx<CheckInFileModel> checkInModel = CheckInFileModel().obs;
   final Rx<FileVersionsModel> fileVersionsModel = FileVersionsModel().obs;
   final Rx<GetFileRequestsModel> getFileRequestsModel = GetFileRequestsModel().obs;
+  final Rx<FileRequestModel> fileRequestModel = FileRequestModel().obs;
 
   void updateGetFilesStatus(RequestState value) {
     getFilesApiStatus.value = value;
@@ -125,6 +126,20 @@ class FileController extends GetxController{
     } catch(error){
       showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
       return false;
+    }
+  }
+
+  Future<void> fileResponse({required int fileID, required int ok}) async{
+    try{
+      final response = await FileRepoImpl.instance.fileResponse(id: fileID, response: ok);
+      if(response.status == true){
+        fileRequestModel.value = response;
+        showSnackBar(response.response ?? "", AlertState.error);
+      } else{
+        showSnackBar(response.response ?? "", AlertState.error);
+      }
+    } catch(error){
+      showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
     }
   }
 }
