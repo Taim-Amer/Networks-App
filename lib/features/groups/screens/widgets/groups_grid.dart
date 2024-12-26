@@ -17,6 +17,8 @@ class MyGroups extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedGroupId = TCacheHelper.getData(key: "group_id") ?? 0;
+    GroupController.instance.checkOwnership(selectedGroupId);
     final size = THelperFunctions.screenSize();
     return Column(
       children: [
@@ -51,21 +53,29 @@ class MyGroups extends StatelessWidget {
               ) : const SizedBox(),
             ),
             TSizes.md.horizontalSpace,
-            GroupController.instance.isUserOwner(TCacheHelper.getData(key: "group_id")) == true ? ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: TSizes.defaultSpace * 1.5,
-                  vertical: TSizes.defaultSpace / (Responsive.isMobile(context) ? 2 : 1),
-                ),
-              ),
-              onPressed: () => FileController.instance.getFileRequest().then((response) => {
-                if(response == true){
-                  showFileRequestsDialog(Get.context!)
+            ValueListenableBuilder<int?>(
+              valueListenable: GroupGrid.selectedGroupIDNotifier,
+              builder: (context, selectedGroupId, _) {
+                if (selectedGroupId == null || !GroupController.instance.isUserOwner(selectedGroupId)) {
+                  return const SizedBox();
                 }
-              }),
-              icon: const Icon(Iconsax.user, size: 16),
-              label: const Text("Requests"),
-            ) : const SizedBox(),
+                return ElevatedButton.icon(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: TSizes.defaultSpace * 1.5,
+                      vertical: TSizes.defaultSpace / (Responsive.isMobile(context) ? 2 : 1),
+                    ),
+                  ),
+                  onPressed: () => FileController.instance.getFileRequest().then((response) {
+                    if (response == true) {
+                      showFileRequestsDialog(Get.context!);
+                    }
+                  }),
+                  icon: const Icon(Iconsax.user, size: 16),
+                  label: const Text("Requests"),
+                );
+              },
+            ),
           ],
         ),
         const SizedBox(height: TSizes.defaultSpace),

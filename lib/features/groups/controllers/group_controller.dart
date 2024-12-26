@@ -44,24 +44,16 @@ class GroupController extends GetxController {
     createGroupsApiStatus.value = value;
   }
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   print("-----------------------");
-  //   getGroups();
-  //   isOwner.value = Get.parameters['IsOwner'] == "true";
-  //   groupId.value = int.parse(Get.parameters['groupID'] ?? '0');
-  //   if (isOwner.value) {
-  //     getUsersOutGroup();
-  //   }
-  // }
-
   bool isUserOwner(int groupId) {
     final groups = groupModel.value.response;
     if (groups == null || groups.isEmpty) {
       return false;
     }
     return groups.any((group) => group.id == groupId && (group.isOwner ?? false));
+  }
+
+  void checkOwnership(int groupID){
+    isOwner.value = isUserOwner(groupID);
   }
 
   Future<void> createInvitation({required int userID, required int groupID}) async {

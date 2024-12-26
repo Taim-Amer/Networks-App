@@ -27,6 +27,9 @@ class GroupCard extends StatelessWidget {
         return  GestureDetector(
           onTap: (){
             GroupGrid.selectedGroupIDNotifier.value = groupID;
+            TCacheHelper.saveData(key: "group_id", value: groupID); // تخزين المعرف المحدد
+            GroupController.instance.checkOwnership(groupID);
+            // GroupGrid.selectedGroupIDNotifier.value = groupID;
             FileController.instance.getFiles(groupID: groupID);
             GroupController.instance.getUsersInGroup(groupID: groupID).then((value) => TCacheHelper.saveData(key: 'group_id', value: groupID));
           },
