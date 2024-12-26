@@ -8,7 +8,6 @@ import 'package:networks_app/features/files/screens/widgets/file_row.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
-import 'package:networks_app/utils/formatters/formatter.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
 
 

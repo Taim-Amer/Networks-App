@@ -22,14 +22,7 @@ Future<dynamic> showFileRequestsDialog(BuildContext context) {
       content: SizedBox(
         width: 400.w,
         height: 450.h,
-        child: TRoundedContainer(
-          showBorder: true,
-          height: 100.h,
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
-          margin: const EdgeInsets.only(top: TSizes.defaultSpace),
-          borderColor: dark ? TColors.secondaryLightColor.withOpacity(0.15) : TColors.secondaryDarkColor.withOpacity(0.15),
-          child: const FileRequestsList(),
-        ),
+        child: const FileRequestsList(),
       ),
     ),
   );
