@@ -9,7 +9,8 @@ class TColors {
   static const Color accent = Color(0xFFD2A8FF);
 
   // Scaffold
-  static Color lightScaffold = const Color(0xff6daedb).withOpacity(.3);
+  static Color lightScaffold = const Color(0xff6daedb);
+  // static Color lightScaffold = const Color(0xff6daedb).withOpacity(.3);
   static const Color darkScaffold = Color(0xFF212332);
   // static const Color darkScaffold = Color(0xFF161B22);
 

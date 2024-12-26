@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:networks_app/bindings/general_bindings.dart';
-import 'package:networks_app/bindings/signin_binding.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
 import 'package:networks_app/utils/router/app_router.dart';
 import 'package:networks_app/utils/storage/cache_helper.dart';

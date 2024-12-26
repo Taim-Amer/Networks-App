@@ -24,6 +24,7 @@ class TAppTheme {
     textTheme: TTextTheme.lightTextTheme,
     chipTheme: TChipTheme.lightChipTheme(false),
     scaffoldBackgroundColor: TColors.lightScaffold,
+    // scaffoldBackgroundColor: Colors.white,
     appBarTheme: TAppBarTheme.lightAppBarTheme,
     textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
     checkboxTheme: TCheckboxTheme.lightCheckboxTheme,
