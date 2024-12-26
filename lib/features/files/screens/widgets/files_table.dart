@@ -103,6 +103,9 @@ class FilesTable extends StatelessWidget {
                 const DataColumn(
                   label: Text(""),
                 ),
+                const DataColumn(
+                  label: Text(""),
+                ),
               ],
               rows: List.generate(
                 files.response!.length,

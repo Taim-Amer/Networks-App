@@ -53,7 +53,7 @@ class FileRepoImpl extends FileRepo{
 
       return AddFileModel.fromJson(response);
     } catch (e) {
-      TLoggerHelper.error("Error in addFile: $e");
+      // TLoggerHelper.error("Error in addFile: $e");
       rethrow;
     }
   }

@@ -142,7 +142,6 @@ class GroupController extends GetxController {
       }
     } catch(error){
       updateCreateGroupsStatus(RequestState.error);
-      TLoggerHelper.error(error.toString());
     }
   }
 }

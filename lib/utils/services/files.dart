@@ -20,16 +20,11 @@ class TFileServices {
         fileName = result.files.single.name;
         fileBytes = result.files.single.bytes ?? Uint8List(0);
         path = result.files.single.path ?? "";
-
-        print("File picked: $fileName");
-        print("File path: $path");
       } else {
         isFilePicked = false;
-        print("No file selected.");
       }
     } catch (e) {
       isFilePicked = false;
-      print("Error picking file: $e");
     }
   }
 }

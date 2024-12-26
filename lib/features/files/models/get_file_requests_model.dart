@@ -9,7 +9,7 @@ class GetFileRequestsModel {
     if (json['response'] != null) {
       response = <Response>[];
       json['response'].forEach((v) {
-        response!.add(new Response.fromJson(v));
+        response!.add(Response.fromJson(v));
       });
     }
   }

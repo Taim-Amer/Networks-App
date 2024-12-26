@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:networks_app/features/files/controllers/file_controller.dart';
+import 'package:networks_app/features/files/screens/widgets/file_version_dialog.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
 import 'package:path_provider/path_provider.dart';
@@ -46,8 +47,10 @@ DataRow FileRow({required String fileName, required String updatedDate, required
       ) : const SizedBox()),
       DataCell(IconButton(
         onPressed: () => FileController.instance.downloadFile(fileID: fileID),
-        icon: Icon(Icons.download, size: 20, color: isFree == "Free" ? Colors.blue : TColors.yellowColor,)),
-      ),
+        icon: Icon(Icons.download, size: 20, color: isFree == "Free" ? Colors.blue : TColors.yellowColor,))),
+      DataCell(IconButton(
+        onPressed: () => FileController.instance.getFileVersion(fileID: fileID).then((response) => showFileVersionDialog(Get.context!)),
+        icon: Icon(Icons.info_outline, size: 20, color: isFree == "Free" ? Colors.blue : TColors.yellowColor,))),
     ],
   );
 }
