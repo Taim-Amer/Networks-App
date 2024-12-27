@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:networks_app/common/widgets/alerts/snackbar.dart';
 import 'package:networks_app/features/groups/models/get_group_invitation_model.dart';
 import 'package:networks_app/features/groups/models/group_model.dart';
+import 'package:networks_app/features/groups/models/invitation_response_model.dart';
 import 'package:networks_app/features/groups/models/users_in_group_model.dart';
 import 'package:networks_app/features/groups/models/users_out_group_model.dart';
 import 'package:networks_app/features/groups/repositories/group_repo_impl.dart';
 import 'package:networks_app/localization/keys.dart';
 import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/logging/logger.dart';
+import 'package:networks_app/utils/storage/cache_helper.dart';
 
 class GroupController extends GetxController {
   static GroupController get instance => Get.find();
@@ -30,6 +32,7 @@ class GroupController extends GetxController {
   final Rx<UsersInGroupModel> usersInGroupModel = UsersInGroupModel().obs;
   final Rx<GroupModel> groupModel = GroupModel().obs;
   final Rx<GetGroupInvitationModel> getGroupInvitationModel = GetGroupInvitationModel().obs;
+  final Rx<InvitationResponseModel> invitationResponseModel = InvitationResponseModel().obs;
 
   void updateGetUserOutGroupStatus(RequestState value) {
     getUsersOutGroupState.value = value;
@@ -147,6 +150,19 @@ class GroupController extends GetxController {
         getGroupInvitationModel.value = response;
       } else{
         showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
+      }
+    } catch(error){
+      showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
+    }
+  }
+
+  Future<void> invitationResponse({required int ok}) async{
+    try{
+      final response = await GroupRepoImpl.instance.invitationResponse(groupID: TCacheHelper.getData(key: "group_id"), response: ok);
+      if(response.status == true){
+        invitationResponseModel.value = response;
+      } else{
+        showSnackBar(response.response ?? "", AlertState.error);
       }
     } catch(error){
       showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
