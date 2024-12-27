@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:networks_app/features/operations/controllers/operations_controller.dart';
+import 'package:networks_app/features/operations/repositories/operations_repo_impl.dart';
+import 'package:networks_app/features/operations/screens/widgets/user_operations_dialog.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
@@ -33,11 +37,6 @@ class UserInGroupCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  // Text(
-                  //   userID.toString(),
-                  //   maxLines: 1,
-                  //   overflow: TextOverflow.ellipsis,
-                  // ),
                   Text(
                     email,
                     style: Theme.of(context)
@@ -49,6 +48,10 @@ class UserInGroupCard extends StatelessWidget {
               ),
             ),
           ),
+          IconButton(
+            onPressed: () => OperationsController.instance.getUserOperations(userID: userID).then((response) => showUserOperationsDialog(Get.context!)),
+            icon: const Icon(Iconsax.info_circle, color: TColors.primaryColor, size: 20),
+          )
         ],
       ),
     );
