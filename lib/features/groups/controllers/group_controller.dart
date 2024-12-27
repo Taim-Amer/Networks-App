@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:networks_app/common/widgets/alerts/snackbar.dart';
+import 'package:networks_app/features/groups/models/get_group_invitation_model.dart';
 import 'package:networks_app/features/groups/models/group_model.dart';
 import 'package:networks_app/features/groups/models/users_in_group_model.dart';
 import 'package:networks_app/features/groups/models/users_out_group_model.dart';
 import 'package:networks_app/features/groups/repositories/group_repo_impl.dart';
+import 'package:networks_app/localization/keys.dart';
 import 'package:networks_app/utils/constants/enums.dart';
 import 'package:networks_app/utils/logging/logger.dart';
 
@@ -27,6 +29,7 @@ class GroupController extends GetxController {
   final Rx<UsersOutGroupModel> usersOutGroupModel = UsersOutGroupModel().obs;
   final Rx<UsersInGroupModel> usersInGroupModel = UsersInGroupModel().obs;
   final Rx<GroupModel> groupModel = GroupModel().obs;
+  final Rx<GetGroupInvitationModel> getGroupInvitationModel = GetGroupInvitationModel().obs;
 
   void updateGetUserOutGroupStatus(RequestState value) {
     getUsersOutGroupState.value = value;
@@ -134,6 +137,19 @@ class GroupController extends GetxController {
       }
     } catch(error){
       updateCreateGroupsStatus(RequestState.error);
+    }
+  }
+
+  Future<void> getGroupInvitation() async{
+    try{
+      final response = await GroupRepoImpl.instance.getGroupInvitation();
+      if(response.status == true){
+        getGroupInvitationModel.value = response;
+      } else{
+        showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
+      }
+    } catch(error){
+      showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
     }
   }
 }

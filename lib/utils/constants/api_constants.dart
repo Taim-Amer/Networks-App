@@ -18,7 +18,8 @@ class TApiConstants {
   static const String deleteFiles = "file/destroy";
   static const String downloadFiles = "file/download";
   //
-
+  static const String getGroupInvitations = "group_invitation/get";
+  static const String groupResponse = "group_invitation/invitation_response";
   //
   static const String getFileRequest = "add_file_request/get";
   static const String fileResponse = "add_file_request/response";

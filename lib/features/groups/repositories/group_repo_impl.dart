@@ -62,14 +62,20 @@ class GroupRepoImpl implements GroupRepo {
   }
 
   @override
-  Future<GetGroupInvitationModel> getGroupInvitation() {
-    // TODO: implement getGroupInvitation
-    throw UnimplementedError();
+  Future<GetGroupInvitationModel> getGroupInvitation() async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.get(TApiConstants.getGroupInvitations, token: token).then((response) => GetGroupInvitationModel.fromJson(response));
   }
 
   @override
-  Future<InvitationResponseModel> invitationResponse({required int groupID, required int response}) {
-    // TODO: implement invitationResponse
-    throw UnimplementedError();
+  Future<InvitationResponseModel> invitationResponse({required int groupID, required int response}) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.post(
+        TApiConstants.groupResponse,
+        token: token,
+        data: {
+          'group_id' : groupID,
+          'response' : response,
+        }).then((response) => InvitationResponseModel.fromJson(response));
   }
 }
