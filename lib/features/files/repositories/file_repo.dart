@@ -3,6 +3,7 @@ import 'package:networks_app/features/files/models/add_file_model.dart';
 import 'package:networks_app/features/files/models/check_in_file_model.dart';
 import 'package:networks_app/features/files/models/edit_file_model.dart';
 import 'package:networks_app/features/files/models/file_model.dart';
+import 'package:networks_app/features/operations/models/file_operations_model.dart';
 import 'package:networks_app/features/files/models/file_request_model.dart';
 import 'package:networks_app/features/files/models/file_versions_model.dart';
 import 'package:networks_app/features/files/models/get_file_requests_model.dart';
