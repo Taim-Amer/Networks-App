@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:networks_app/features/operations/controllers/operations_controller.dart';
-import 'package:networks_app/features/operations/repositories/operations_repo_impl.dart';
 import 'package:networks_app/features/operations/screens/widgets/user_operations_dialog.dart';
 import 'package:networks_app/utils/constants/colors.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
@@ -32,18 +31,8 @@ class UserInGroupCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    email,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: Colors.white70),
-                  ),
+                  Text(name, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  Text(email, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white70)),
                 ],
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:networks_app/features/operations/controllers/operations_controller.dart';
-import 'package:networks_app/features/operations/screens/widgets/user_operations_item.dart';
+import 'package:networks_app/features/operations/screens/widgets/file_operations_item.dart';
 
 class UserOperationsList extends StatelessWidget {
   const UserOperationsList({super.key});
@@ -21,9 +21,9 @@ class UserOperationsList extends StatelessWidget {
         itemCount: userOperations.length,
         itemBuilder: (context, index) {
           final userOperation = userOperations[index];
-          return UserOperationsItem(
-            fileName: userOperation.operation!,
-            operationName: userOperation.file!.name!,
+          return FileOperationsItem(
+            operationName: userOperation.operation!,
+            username: userOperation.file!.name!,
           );
         },
       ),
