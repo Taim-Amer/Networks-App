@@ -68,10 +68,6 @@ class FileController extends GetxController{
       }
     }
     } catch(error){
-      print(error.toString());
-      print(error.toString());
-      print(error.toString());
-      print(error.toString());
       updateAddFilesStatus(RequestState.error);
       showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
     }
@@ -93,7 +89,7 @@ class FileController extends GetxController{
 
   Future<void> downloadFile({required int fileID}) async {
     try {
-      var fileData = await FileRepoImpl.instance.downloadFile(fileID: fileID);
+      await FileRepoImpl.instance.downloadFile(fileID: fileID);
       showSnackBar('File downloaded successfully!', AlertState.success);
     } catch (error) {
       showSnackBar('Error downloading file: $error', AlertState.error);
@@ -105,12 +101,8 @@ class FileController extends GetxController{
       final response = await FileRepoImpl.instance.getFileVersions(fileID: fileID);
       if(response.status == true){
         fileVersionsModel.value = response;
-      } else{
-        showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
       }
-    } catch(error){
-      showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
-    }
+    } catch(error){}
   }
 
   Future<bool> getFileRequest() async{

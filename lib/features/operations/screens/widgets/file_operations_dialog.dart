@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:networks_app/features/files/controllers/file_controller.dart';
 import 'package:networks_app/features/files/screens/widgets/file_requests_list.dart';
 import 'package:networks_app/features/operations/screens/widgets/file_operations_list.dart';
 import 'package:networks_app/features/operations/screens/widgets/user_operations_list.dart';
@@ -15,9 +16,11 @@ Future<dynamic> showFileOperationsDialog(BuildContext context) {
     context: context,
     builder: (context) => AlertDialog(
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(onPressed: () => Get.back(), icon: const Icon(Icons.close))
+          const SizedBox(),
+          Text("${FileController.instance.fileVersionsModel.value.response.toString()} versions"),
+          IconButton(onPressed: () => Get.back(), icon: const Icon(Icons.close)),
         ],
       ),
       backgroundColor: dark ? TColors.darkScaffold : TColors.lightScaffold,

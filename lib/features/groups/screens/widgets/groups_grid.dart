@@ -7,6 +7,7 @@ import 'package:networks_app/features/files/screens/widgets/file_requests_dialog
 import 'package:networks_app/features/groups/controllers/group_controller.dart';
 import 'package:networks_app/features/groups/screens/widgets/create_group_dialog.dart';
 import 'package:networks_app/features/groups/screens/widgets/group_card.dart';
+import 'package:networks_app/features/groups/screens/widgets/group_requests_dialog.dart';
 import 'package:networks_app/responsive.dart';
 import 'package:networks_app/utils/constants/sizes.dart';
 import 'package:networks_app/utils/helpers/helper_functions.dart';
@@ -71,10 +72,22 @@ class MyGroups extends StatelessWidget {
                       showFileRequestsDialog(Get.context!);
                     }
                   }),
-                  icon: const Icon(Iconsax.user, size: 16),
-                  label: const Text("Requests"),
+                  // icon: const Icon(Iconsax.user, size: 16),
+                  label: const Text("File Requests"),
                 );
               },
+            ),
+            TSizes.md.horizontalSpace,
+            ElevatedButton.icon(
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: TSizes.defaultSpace * 1.5,
+                  vertical: TSizes.defaultSpace / (Responsive.isMobile(context) ? 2 : 1),
+                ),
+              ),
+              onPressed: () => showGroupRequestsDialog(context),
+              // icon: const Icon(Icons.add),
+              label: const Text("Group Requests"),
             ),
           ],
         ),
