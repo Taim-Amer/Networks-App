@@ -88,11 +88,14 @@ class FileController extends GetxController{
   }
 
   Future<void> downloadFile({required int fileID}) async {
+    print(fileID);
+    print(fileID);
+    print(fileID);
     try {
       await FileRepoImpl.instance.downloadFile(fileID: fileID);
       showSnackBar('File downloaded successfully!', AlertState.success);
     } catch (error) {
-      showSnackBar('Error downloading file: $error', AlertState.error);
+      showSnackBar('Error downloading file', AlertState.error);
     }
   }
 
@@ -126,7 +129,7 @@ class FileController extends GetxController{
       final response = await FileRepoImpl.instance.fileResponse(id: fileID, response: ok);
       if(response.status == true){
         fileRequestModel.value = response;
-        showSnackBar(response.response ?? "", AlertState.error);
+        showSnackBar(response.response ?? "", AlertState.success);
       } else{
         showSnackBar(response.response ?? "", AlertState.error);
       }

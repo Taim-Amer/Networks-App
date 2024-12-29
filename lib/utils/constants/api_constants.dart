@@ -30,4 +30,7 @@ class TApiConstants {
   static const String fileOperations = "file_operation/get_file_operations";
   static const String userOperations = "file_operation/get_user_operations";
 
+  static const String exportFileOperations = "file_operation/export_file_operations";
+  static const String exportUserOperations = "file_operation/export_user_operations";
+
 }

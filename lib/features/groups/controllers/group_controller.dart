@@ -143,16 +143,19 @@ class GroupController extends GetxController {
     }
   }
 
-  Future<void> getGroupInvitation() async{
+  Future<bool> getGroupInvitation() async{
     try{
       final response = await GroupRepoImpl.instance.getGroupInvitation();
       if(response.status == true){
         getGroupInvitationModel.value = response;
+        return true;
       } else{
         showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
+        return false;
       }
     } catch(error){
       showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
+      return false;
     }
   }
 
@@ -161,6 +164,7 @@ class GroupController extends GetxController {
       final response = await GroupRepoImpl.instance.invitationResponse(groupID: TCacheHelper.getData(key: "group_id"), response: ok);
       if(response.status == true){
         invitationResponseModel.value = response;
+        showSnackBar(response.response ?? "", AlertState.success);
       } else{
         showSnackBar(response.response ?? "", AlertState.error);
       }

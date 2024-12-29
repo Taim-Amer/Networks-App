@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:networks_app/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:networks_app/features/files/controllers/file_controller.dart';
 import 'package:networks_app/features/operations/controllers/operations_controller.dart';
 import 'package:networks_app/features/operations/screens/widgets/user_operations_dialog.dart';
 import 'package:networks_app/utils/constants/colors.dart';
@@ -40,7 +41,11 @@ class UserInGroupCard extends StatelessWidget {
           IconButton(
             onPressed: () => OperationsController.instance.getUserOperations(userID: userID).then((response) => showUserOperationsDialog(Get.context!)),
             icon: const Icon(Iconsax.info_circle, color: TColors.primaryColor, size: 20),
-          )
+          ),
+          IconButton(
+            onPressed: () => FileController.instance.addFile(userID, isFree: 0),
+            icon: const Icon(Iconsax.add, color: TColors.primaryColor, size: 25),
+          ),
         ],
       ),
     );

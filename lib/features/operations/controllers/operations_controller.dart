@@ -44,4 +44,20 @@ class OperationsController extends GetxController{
       return false;
     }
   }
+
+  Future<void> exportUserOperations({required int userID}) async{
+    try{
+      await OperationsRepoImpl.instance.exportUserOperations(groupID: TCacheHelper.getData(key: 'group_id'), userID: userID, exportType: 'pdf');
+    } catch(error){
+      showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
+    }
+  }
+
+  Future<void> exportFileOperations({required int fileID}) async{
+    try{
+      await OperationsRepoImpl.instance.exportFileOperations(fileID: fileID, exportType: 'pdf');
+    } catch(error){
+      showSnackBar(TranslationKey.kErrorMessage, AlertState.error);
+    }
+  }
 }

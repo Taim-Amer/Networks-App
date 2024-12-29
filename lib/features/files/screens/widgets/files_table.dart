@@ -26,8 +26,7 @@ class FilesTable extends StatelessWidget {
         height: 400,
         width: double.infinity,
         padding: const EdgeInsets.all(TSizes.defaultSpace),
-        backgroundColor:
-        dark ? TColors.secondaryDarkColor : TColors.secondaryLightColor,
+        backgroundColor: dark ? TColors.secondaryDarkColor : TColors.secondaryLightColor,
         child: _buildContent(apiStatus, files, context),
       );
     });
@@ -110,7 +109,7 @@ class FilesTable extends StatelessWidget {
                 files.response!.length,
                 (index) => FileRow(
                   fileName: files.response?[index].name ?? "",
-                  isFree: files.response?[index].isFree == 1 ? "Free" : "Checked in" ?? "",
+                  isFree: files.response?[index].isFree == 1 ? "Free" : "Checked in",
                   updatedDate: files.response?[index].updatedAt ?? "",
                   fileID: files.response?[index].id ?? 1
                 ),

@@ -30,4 +30,27 @@ class OperationsRepoImpl implements OperationsRepo{
       token: token,
     ).then((response) => UserOperationsModel.fromJson(response));
   }
+
+
+  @override
+  Future<void> exportFileOperations({required int fileID, required String exportType}) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.download(
+      endPoint: TApiConstants.exportFileOperations,
+      data: {"file_id" : fileID, 'export_type' : exportType},
+      fileName: 'user_operations.pdf',
+      savePath: 'C:/Users/taim/Desktop/downloads/file_operations$fileID.pdf',
+    );
+  }
+
+  @override
+  Future<void> exportUserOperations({required int userID, required int groupID, required String exportType}) async{
+    final dioHelper = TDioHelper();
+    return await dioHelper.download(
+      fileName: 'user_operations.pdf',
+      savePath: 'C:/Users/taim/Desktop/downloads/user_operations$userID.pdf',
+      endPoint: TApiConstants.exportUserOperations,
+      data: {"group_id" : groupID, 'user_id' : userID, 'export_type' : exportType},
+    );
+  }
 }

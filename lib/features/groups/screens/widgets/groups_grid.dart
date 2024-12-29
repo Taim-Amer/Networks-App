@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:networks_app/features/files/controllers/file_controller.dart';
 import 'package:networks_app/features/files/screens/widgets/file_requests_dialog.dart';
 import 'package:networks_app/features/groups/controllers/group_controller.dart';
@@ -60,24 +59,29 @@ class MyGroups extends StatelessWidget {
                 if (selectedGroupId == null || !GroupController.instance.isUserOwner(selectedGroupId)) {
                   return const SizedBox();
                 }
-                return ElevatedButton.icon(
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: TSizes.defaultSpace * 1.5,
-                      vertical: TSizes.defaultSpace / (Responsive.isMobile(context) ? 2 : 1),
+                return Row(
+                  children: [
+                    ElevatedButton.icon(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: TSizes.defaultSpace * 1.5,
+                          vertical: TSizes.defaultSpace / (Responsive.isMobile(context) ? 2 : 1),
+                        ),
+                      ),
+                      onPressed: () => FileController.instance.getFileRequest().then((response) {
+                        if (response == true) {
+                          showFileRequestsDialog(Get.context!);
+                        }
+                      }),
+                      // icon: const Icon(Iconsax.user, size: 16),
+                      label: const Text("File Requests"),
                     ),
-                  ),
-                  onPressed: () => FileController.instance.getFileRequest().then((response) {
-                    if (response == true) {
-                      showFileRequestsDialog(Get.context!);
-                    }
-                  }),
-                  // icon: const Icon(Iconsax.user, size: 16),
-                  label: const Text("File Requests"),
+                    TSizes.md.horizontalSpace,
+
+                  ],
                 );
               },
             ),
-            TSizes.md.horizontalSpace,
             ElevatedButton.icon(
               style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(
@@ -85,7 +89,11 @@ class MyGroups extends StatelessWidget {
                   vertical: TSizes.defaultSpace / (Responsive.isMobile(context) ? 2 : 1),
                 ),
               ),
-              onPressed: () => showGroupRequestsDialog(context),
+              onPressed: () => GroupController.instance.getGroupInvitation().then((response){
+                if(response == true){
+                  showGroupRequestsDialog(Get.context!);
+                }
+              }),
               // icon: const Icon(Icons.add),
               label: const Text("Group Requests"),
             ),
